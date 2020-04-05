@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const dbUrl = `mongodb+srv://sema_user:${process.env.MONGODB_PASSWORD}@cluster0-gjhmw.mongodb.net/test?retryWrites=true&w=majority`, 
 dbOptions = {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: true
 };
 
 // Connect ot DB

@@ -39,29 +39,30 @@ exports.handler =  async(event, context) => {
     let errorStatusCode = 500
   
     try {
-        const { name, email, password } = JSON.parse(event.body);
+        const { email, password } = JSON.parse(event.body);
 
         const existingUser = await User.findOne({ email });
-        if (existingUser !== null) {
-            errorStatusCode = 409
-            throw new Error(`A user already exists with the email: ${email}`)
+        if (existingUser == null) {
+            errorStatusCode = 401
+            throw new Error(`Invalid password or email`)
         }
 
-        const passwordHash = await bcrypt.hash(password, 10);
+        const matches = await bcrypt.compare(password, existingUser.password)
+        if (!matches) {
+            errorStatusCode = 401
+            throw new Error(`Invalid password or email`)
+        }
 
-        const { insertedId } = await User.create({
-          name,
-          email,
-          password: passwordHash,
-        });        
+        const userId = existingUser._id;
+        const jwtCookie =  createJwtCookie(userId, email);
 
         return {
           statusCode: 200,
           headers: {
-            "Set-Cookie": createJwtCookie(insertedId, email),
+            "Set-Cookie": jwtCookie,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ id: insertedId, msg: "User has been registered!", email }),
+          body: JSON.stringify({ id: userId, email, msg: "Successfullly logged in!" }),
         }
 
     } catch (err) {
