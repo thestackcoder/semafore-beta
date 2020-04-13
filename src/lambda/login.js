@@ -11,7 +11,7 @@ import cookie from "cookie"
 import db from './server';
 
 // Load the User Model
-import User from './userModel'
+import User from './models/userModel';
 
 //Creating a cookie
 

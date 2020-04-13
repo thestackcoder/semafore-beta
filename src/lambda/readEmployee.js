@@ -5,18 +5,14 @@ import mongoose from 'mongoose';
 import db from './server';
 
 // Load the Product Model
-import Organization from './models/organizationModel';
+import Employee from './models/employeeModel';
 
 exports.handler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
   
   try {
     // Use Product.Model to find all products
-    const orgs = await Organization.find(),
-          response = {
-            msg: "Organizations successfully found",
-            data: orgs
-          }
+    const emps = await Employee.find(), response = { msg: "Employees successfully found", data: emps }
     
     return {
       statusCode: 200,     

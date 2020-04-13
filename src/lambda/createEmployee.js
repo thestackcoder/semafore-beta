@@ -3,32 +3,34 @@ import mongoose from 'mongoose'
 // Load the server
 import db from './server'
 
-import Organization from './models/organizationModel'
+import Employee from './models/employeeModel'
 
 exports.handler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
   
   try {
         const data = JSON.parse(event.body),
+            organisation = data.org_id,
             name = data.name,
-            transaction_id = data.transaction_id,
-            org = {
+            phone = data.phone,
+            emp = {
                 name: name,
-                transaction_id: transaction_id,
+                phone: phone,
+                organisation: organisation
             },
             response = {
-                msg: "Organization successfully created",
-                data: org
+                msg: "Employee successfully created",
+                data: emp
             }
     
-    await Organization.create(org)
+    await Employee.create(emp)
 
     return {
       statusCode: 201,
       body: JSON.stringify(response)
     }
   } catch (err) {
-    console.log('organization.create', err) // output to netlify function log
+    console.log('employee.create', err) // output to netlify function log
     return {
       statusCode: 500,
       body: JSON.stringify({msg: err.message})

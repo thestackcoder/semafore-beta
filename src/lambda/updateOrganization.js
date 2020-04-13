@@ -5,7 +5,7 @@ import mongoose from 'mongoose'
 import db from './server'
 
 // Load the organization Model
-import Organization from './organizationModel'
+import Organization from './models/organizationModel'
 
 exports.handler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
