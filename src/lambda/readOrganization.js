@@ -10,6 +10,12 @@ import Organization from './models/organizationModel';
 exports.handler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
+  const headers = {
+    'Accept': "application/json",
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+  };
+
   try {
     // Use Product.Model to find all products
     const orgs = await Organization.find(),
@@ -20,6 +26,7 @@ exports.handler = async (event, context) => {
 
     return {
       statusCode: 200,
+      headers: headers,
       body: JSON.stringify(response)
     }
 
