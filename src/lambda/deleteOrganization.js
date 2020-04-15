@@ -9,7 +9,7 @@ import db from './server'
 import Organization from './models/organizationModel'
 
 exports.handler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
+  context.callbackWaitsForEmptyEventLoop = false;
 
   const headers = {
     'Accept': "application/json",
