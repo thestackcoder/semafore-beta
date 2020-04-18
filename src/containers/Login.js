@@ -4,6 +4,7 @@ import "../stylesheets/App.css";
 import logo from "../images/logo.png";
 import back from "../images/Background.png";
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 // import { setUserSession } from '../utils/Common';
 
 
@@ -16,13 +17,15 @@ class Login extends React.Component {
       email: '',
       password: ''
     }
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleLogin = () => {
     // setError(null);
+
     axios({
       method: 'post',
-      url: 'https://objective-pare-82e2d2.netlify.com/.netlify/functions/login',
+      url: '/.netlify/functions/login',
       headers: {
         accept: 'Accept: application/json',
       },
@@ -33,7 +36,8 @@ class Login extends React.Component {
     })
       .then(response => {
         // setUserSession(response.data.token, response.data.user);
-        console.log(response.data, "Logged In");
+        console.log(response.data);
+
       })
       .catch(error => {
         // if (error.response.status === 401) setError(error.response.data.message);
@@ -55,17 +59,19 @@ class Login extends React.Component {
                 autoFocus
                 type="email"
                 placeholder="Username/Email"
+                onChange={event => this.setState({ email: event.target.value })}
               />
             </FormGroup>
             <FormGroup controlId="password">
               <FormControl
                 placeholder="Password"
                 type="password"
+                onChange={event => this.setState({ password: event.target.value })}
               />
             </FormGroup>
 
             {/* {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br /> */}
-            <Button className="btn btn-default btn-block" type="submit" onClick={this.handleLogin}>
+            <Button className="btn btn-default btn-block" onClick={this.handleLogin}>
               Login
             </Button>
 

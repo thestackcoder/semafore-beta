@@ -30,43 +30,43 @@ class Settings extends Component {
                                 <div className="firm-box">
                                     <div className="col-8 offset-md-2">
                                         <form className="settings_form">
-                                            <div class="form-group text-center">
+                                            <div className="form-group text-center">
                                                 <img src={avatar} alt="user-profile-pic" />
                                             </div>
-                                            <div class="form-group">
-                                                <label for="fname">First Name:</label>
+                                            <div className="form-group">
+                                                <label>First Name:</label>
                                                 <input
                                                     type="text"
-                                                    class="form-control"
+                                                    className="form-control"
                                                     id="fname"
                                                     value={this.state.first_name}
                                                     onChange={event => this.setState({ first_name: event.target.value })}
                                                 />
                                             </div>
-                                            <div class="form-group">
-                                                <label for="lname">Last Name:</label>
+                                            <div className="form-group">
+                                                <label>Last Name:</label>
                                                 <input
                                                     type="text"
-                                                    class="form-control"
+                                                    className="form-control"
                                                     id="lname"
                                                     value={this.state.last_name}
                                                     onChange={event => this.setState({ last_name: event.target.value })}
                                                 />
                                             </div>
-                                            <div class="form-group">
-                                                <label for="pwd">Current Password:</label>
-                                                <input type="text" class="form-control" id="pwd_1" value={this.state.current_password} />
+                                            <div className="form-group">
+                                                <label>Current Password:</label>
+                                                <input type="text" className="form-control" id="pwd_1" value={this.state.current_password} />
                                             </div>
-                                            <div class="form-group">
+                                            <div className="form-group">
                                                 <label for="pwd">New Password:</label>
-                                                <input type="password" class="form-control" id="pwd_2" />
+                                                <input type="password" className="form-control" id="pwd_2" />
                                             </div>
-                                            <div class="form-group">
-                                                <label for="pwd">Confirm New Password:</label>
-                                                <input type="password" class="form-control" id="pwd_3" />
+                                            <div className="form-group">
+                                                <label>Confirm New Password:</label>
+                                                <input type="password" className="form-control" id="pwd_3" />
                                             </div>
-                                            <div class="form-group text-center">
-                                                <button type="submit" class="btn btn-default">Save</button>
+                                            <div className="form-group text-center">
+                                                <button type="submit" className="btn btn-default">Save</button>
                                             </div>
                                         </form>
                                     </div>
