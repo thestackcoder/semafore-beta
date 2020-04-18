@@ -124,18 +124,7 @@ class AddOrg extends Component {
                                                     onChange={event => this.setState({ password: event.target.value })}
                                                 />
                                             </div>
-                                            <div className="form-group">
-                                                <label>Transaction ID:</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="lname"
-                                                    required
-                                                    value={this.state.transaction_id}
-                                                    onChange={event => this.setState({ transaction_id: event.target.value })}
-                                                    disabled
-                                                />
-                                            </div>
+
                                             <button className="mt-4 mb-2 btn btn-block btn-default" onClick={this.handleSubmit}>
                                                 {this.state.isLoading ? <div className="btn-loader"></div> : "Add"}
                                             </button>
