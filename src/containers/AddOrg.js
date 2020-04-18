@@ -7,7 +7,9 @@ class AddOrg extends Component {
         super(props);
         this.state = {
             isLoading: false,
+            email: '',
             name: '',
+            password: '',
             transaction_id: '',
             message: false,
             message_text: '',
@@ -22,7 +24,7 @@ class AddOrg extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        if (this.state.name == "" || this.state.transaction_id == "") {
+        if (this.state.name == "" || this.state.email == "" || this.state.password == "") {
             this.setState({ empty_field: true });
             return;
         } else {
@@ -37,7 +39,10 @@ class AddOrg extends Component {
                     'Accept': "application/json",
                 },
                 data: {
-                    "name": this.state.name, "transaction_id": this.state.transaction_id
+                    "name": this.state.name,
+                    "email": this.state.email,
+                    "password": this.state.password,
+                    "transaction_id": this.state.transaction_id,
                 }
             })
                 .then((data) => {
@@ -47,7 +52,7 @@ class AddOrg extends Component {
                 })
                 .catch(error => {
                     console.log(error);
-                    this.setState({ message: false });
+                    this.setState({ message: false, isLoading: false });
                 });
         });
 
@@ -98,6 +103,28 @@ class AddOrg extends Component {
                                                 />
                                             </div>
                                             <div className="form-group">
+                                                <label>Email:</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="email"
+                                                    required
+                                                    value={this.state.email}
+                                                    onChange={event => this.setState({ email: event.target.value })}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Password:</label>
+                                                <input
+                                                    type="password"
+                                                    className="form-control"
+                                                    id="password"
+                                                    required
+                                                    value={this.state.password}
+                                                    onChange={event => this.setState({ password: event.target.value })}
+                                                />
+                                            </div>
+                                            <div className="form-group">
                                                 <label>Transaction ID:</label>
                                                 <input
                                                     type="text"
@@ -106,6 +133,7 @@ class AddOrg extends Component {
                                                     required
                                                     value={this.state.transaction_id}
                                                     onChange={event => this.setState({ transaction_id: event.target.value })}
+                                                    disabled
                                                 />
                                             </div>
                                             <button className="mt-4 mb-2 btn btn-block btn-default" onClick={this.handleSubmit}>

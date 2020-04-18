@@ -8,7 +8,20 @@ const OrganzationSchema = new Schema({
     },
     transaction_id: {
         type: String,
-        required: true
+        required: false
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    active: {
+        type: Boolean,
+        default: false
     },
     date: {
         type: Date,

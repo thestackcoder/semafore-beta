@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import bcrypt from 'bcryptjs';
 
 // Load the server
 import db from './server'
@@ -17,9 +18,13 @@ exports.handler = async (event, context) => {
   try {
     const data = JSON.parse(event.body),
       name = data.name,
+      email = data.email,
+      password = await bcrypt.hash(data.password, 10),
       transaction_id = data.transaction_id,
       org = {
         name: name,
+        email: email,
+        password: password,
         transaction_id: transaction_id,
       },
       response = {

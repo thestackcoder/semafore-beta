@@ -13,6 +13,7 @@ class Organization extends Component {
     state = {
         loading: true,
         msg: null,
+        isActive: false,
         orgs: [],
         toggledClearRows: false,
         rowsData: []
@@ -20,38 +21,48 @@ class Organization extends Component {
 
     columns = [
         {
+            name: 'ID',
+            selector: '_id',
+            sortable: true,
+        },
+        {
             name: 'Name',
             selector: 'name',
             sortable: true,
         },
         {
-            name: 'Transaction_id',
-            selector: 'transaction_id',
+            name: 'Email',
+            selector: 'email',
             sortable: true,
         },
         {
-            name: 'Dated',
+            name: 'Joining Date',
             selector: 'date',
             sortable: true,
         },
         {
-            name: "Action",
+            name: 'Active',
             cell: row => <div>
                 <label className='switch'>
-                    <input type='checkbox' />
+                    <input onChange={this.handleCheckClick} type='checkbox' />
                     <span className='slider'></span>
                 </label>
-                &nbsp; &nbsp;
-            <Link to={{
+            </div>
+        },
+        {
+            name: "Action",
+            cell: row => <div>
+                <Link to={{
                     pathname: "/update-organization",
                     state: {
                         id: row._id,
                         name: row.name,
-                        transaction_id: row.transaction_id
+                        transaction_id: row.transaction_id,
+                        email: row.email
                     }
                 }} className="btn btn-success btn-sm">Edit</Link>
-                &nbsp; &nbsp;
-            <button onClick={() => { if (window.confirm('Are you sure you wish to delete this organization?')) this.deleteRow(row._id) }} className="btn btn-danger btn-sm">Delete</button>
+                    &nbsp; &nbsp;
+                <button onClick={() => { if (window.confirm('Are you sure you wish to delete this organization?')) this.deleteRow(row._id) }} className="btn btn-danger btn-sm">Delete</button>
 
             </div>,
         }
@@ -89,6 +100,33 @@ class Organization extends Component {
 
     handleClearRows = () => {
         this.setState({ toggledClearRows: !this.state.toggledClearRows });
+    }
+
+    handleCheckClick = () => {
+        let active = !this.state.isActive;
+        console.log(active);
+        this.setState({ isActive: active });
+        // axios({
+        //     method: 'put',
+        //     url: '/.netlify/functions/updateOrganization',
+        //     headers: {
+        //         'Accept': "application/json",
+        //     },
+        //     data: {
+        //         "id": id,
+        //         "organization": {
+        //             "active": this.state.isActive
+        //         }
+        //     }
+        // })
+        //     .then((data) => {
+        //         // setUserSession(response.data.token, response.data.user);
+        //         console.log(data);
+        //         this.setState({ active: !this.state.isActive })
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
     }
 
     deleteRow = (id) => {

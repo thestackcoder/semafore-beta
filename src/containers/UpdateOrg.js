@@ -9,6 +9,7 @@ class UpdateOrg extends Component {
             isLoading: false,
             name: '',
             transaction_id: '',
+            email: '',
             id: '',
             message: false,
             message_text: '',
@@ -18,15 +19,13 @@ class UpdateOrg extends Component {
     }
 
     componentDidMount() {
-        const { name } = this.props.location.state;
-        const { id } = this.props.location.state;
-        const { transaction_id } = this.props.location.state;
+        const { name, id, transaction_id, email } = this.props.location.state;
 
-        this.setState({ name: name, transaction_id: transaction_id, id: id });
+        this.setState({ name: name, transaction_id: transaction_id, id: id, email: email });
     }
 
     handleChange(event) {
-        this.setState({ name: event.target.value });
+        this.setState({ name: event.target.value, email: event.target.value });
     }
 
     handleSubmit(event) {
@@ -48,7 +47,7 @@ class UpdateOrg extends Component {
                 data: {
                     "id": this.state.id,
                     "organization": {
-                        "name": this.state.name, "transaction_id": this.state.transaction_id
+                        "name": this.state.name, "email": this.state.email
                     }
                 }
             })
@@ -106,6 +105,17 @@ class UpdateOrg extends Component {
                                                     required
                                                     value={this.state.name}
                                                     onChange={event => this.setState({ name: event.target.value })}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Email:</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="email"
+                                                    required
+                                                    value={this.state.email}
+                                                    onChange={event => this.setState({ email: event.target.value })}
                                                 />
                                             </div>
                                             <div className="form-group">

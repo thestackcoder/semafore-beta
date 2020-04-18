@@ -51,20 +51,19 @@ body {
 .btn-danger{
   padding: 2px 5px !important;
   font-size: 11px !important;
-  margin-top: -5px;
   border-radius: 2px !important;
 }
 
 .btn-success{
   padding: 2px 5px !important;
   font-size: 11px !important;
-  margin-top: -4px !important;
   background-color: #01A499 !important;
   border-radius: 2px !important;
 }
 
 .switch{
-  margin-top:5px;
+  margin-top:3px;
+  margin-left:10px;
 }
 
 .content-box, 
