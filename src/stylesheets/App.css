@@ -1,0 +1,395 @@
+html{
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: #f9f9f9;
+  margin: 0;
+}
+
+.navbar{
+    padding: 1.3rem 1.25rem;
+    background-color: #f9f9f9 !important;
+    border-bottom: none !important;
+    /* box-shadow: 3px 3px 5px rgb(240, 240, 240); */
+}
+
+.das {
+    color: #16222A;
+    font-size: 1.5rem;
+}
+
+
+@media only screen and (max-width:768px){
+  .das {
+    font-size: 1.5rem;
+    color: #16222A;
+  }
+}
+
+.firm-box {
+  text-align: justify !important;
+  padding: 20px 35px 12px 35px !important;
+}
+
+.rdt_Table {
+  height: 480px !important;
+  overflow:auto;
+  background:#fff;
+}
+
+.dNoAIX {
+  font-size: 15px !important; 
+}
+
+.kwRiGp {
+  min-height: 40px !important;
+}
+
+.btn-danger{
+  padding: 2px 5px !important;
+  font-size: 11px !important;
+  margin-top: -5px;
+  border-radius: 2px !important;
+}
+
+.btn-success{
+  padding: 2px 5px !important;
+  font-size: 11px !important;
+  margin-top: -4px !important;
+  background-color: #01A499 !important;
+  border-radius: 2px !important;
+}
+
+.switch{
+  margin-top:5px;
+}
+
+.content-box, 
+.graph-box,
+.firm-box {
+  -webkit-box-shadow: 0 0 8px #ddd;
+  box-shadow: 0 0 8px #ddd;
+  text-align: center;
+  padding: 15px 20px;
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+.content-box:hover, 
+.graph-box:hover{
+  -webkit-box-shadow: 0 0 16px #27364050;
+  box-shadow: 0 0 16px #27364050;
+  transition: 0.5s;
+}
+
+
+.content-box .title{
+  font-size: 26px;
+  color:#01A499;
+  font-weight: 600;
+  margin-top: 20px;
+  line-height: 12px;
+}
+
+.content-box .value{
+  font-size: 26px;
+  color: #666;
+  font-weight: 600;
+}
+
+.content-box img{
+  width: 80px;
+}
+
+/* Tables */
+
+.dataTables_wrapper {
+  margin-top: 30px;
+}
+
+table {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+}
+
+th{
+  color: #01A499;
+}
+
+tr:hover{
+  background-color: #f7f7f7;
+  transition: 0.2s;
+}
+
+td, th {
+  text-align: left;
+  padding: 12px 12px;
+  border-bottom: 1px solid rgb(223, 223, 223);
+}
+
+.dataTables_length,
+.dataTables_info{
+  display: inline-block;
+  padding-left: 12px;
+}
+
+.dataTables_filter,
+.dataTables_paginate{
+  float: right;
+  padding-right: 12px;
+}
+
+.dataTables_filter input,
+.dataTables_length select{
+  margin-left: 10px;
+  border: none;
+  border-bottom: 1px solid #555;
+}
+
+.dataTables_filter input:focus{
+  outline: none;
+}
+
+
+.dataTables_paginate,
+.dataTables_info{
+  margin-top: 30px;
+}
+
+.dataTables_paginate a{
+  color: #01A499;
+  padding-left: 10px;
+}
+
+.dataTables_paginate a:hover{
+  cursor: pointer;
+  text-decoration: underline !important;
+}
+
+/* Settings form */
+
+.settings_form label{
+  font-weight: 600;
+}
+
+.settings_form input{
+  border-radius: 0px;
+  height: 40px;
+}
+
+.settings_form input:focus{
+  border-color: #01A499;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(1, 164, 153, 0.555);
+  outline: 0 none;
+}
+
+.settings_form img{
+  width: 80px;
+}
+
+.settings_form .btn{
+  margin-top: 10px;
+  padding: 7px 40px;
+  border-radius: 0;
+  background-color: #01A499;
+  color: #fff;
+}
+
+.settings_form .btn:hover{
+  box-shadow: 3px 3px 7px #aaa;
+  transition: 0.3s;
+  background-color: rgba(1, 164, 153, 0.959);
+}
+
+.settings_form .btn:active{
+  background-color: #01A499;
+}
+
+/* Footer */
+
+footer{ 
+  text-align: right;
+  padding: 10px 20px;
+  color: #888;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-size: 13px;
+}
+
+
+/* Login */
+.login-back{
+  /* Set rules to fill background */
+  min-height: 100%;
+  min-width: 1024px;
+
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: auto;
+
+  /* Set up positioning */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.login-box{
+  text-align: center;
+  height: 100% !important;
+}
+
+.Login{
+  background-color: rgba(49, 49, 49, 0.603);
+  padding: 45px 60px;
+  border-radius: 20px;
+  margin-top: 150px !important;
+}
+
+.login-box button{
+  background-color: #01A499 !important; 
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 30px;
+  height: 50px;
+  border-radius: 0px;
+  border: none;
+}
+
+.heading{
+  display: inline-block;
+}
+
+.primary-btn{
+  background-color: #01A499 !important; 
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 0px;
+  border: none;
+  color: #fff !important;
+  float: right;
+}
+
+.primary-btn:hover{
+  background-color: rgb(1, 138, 129) !important; 
+}
+
+.login-box input{
+  height: 50px;
+  background-color: #444;
+  color: #aaa !important;
+  border: none;
+  font-size: 18px;
+  border-radius: 0px;
+}
+
+.login-box input:focus{
+  background-color: #444;
+  border-color: #01A499;
+  box-shadow: none;
+  outline: 0 none !important;
+}
+
+.login-logo{
+  width: 100px
+}
+
+.img-box span{
+  color: #01A499;
+  font-weight: 500;
+  font-size: 22px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.btn-default{
+  background-color: #01A499;
+  color: #fff;
+}
+
+
+/* loader */
+.loader {
+    border: 6px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 6px solid #01A499;
+    width: 80px;
+    height: 80px;
+    -webkit-animation: spin 1s linear infinite; /* Safari */
+    animation: spin 1s linear infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin: 200px auto;
+}
+.parent-loader{
+    position: relative;
+    width: 100%;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* Custom Scroll bar*/
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+/* Button loader*/
+
+.btn-loader {
+  border: 2px solid #c7c7c7;
+  border-radius: 50%;
+  border-top: 2px solid #ffffff;
+  width: 18px;
+  height: 18px;
+  -webkit-animation: spin 1s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  margin-left: -15px;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
