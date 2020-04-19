@@ -24,7 +24,7 @@ class AddOrg extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        if (this.state.name == "" || this.state.email == "" || this.state.password == "") {
+        if (this.state.name === "" || this.state.email === "" || this.state.password === "") {
             this.setState({ empty_field: true });
             return;
         } else {
@@ -60,14 +60,14 @@ class AddOrg extends Component {
 
     render() {
         let alert;
-        if (this.state.message == false) {
+        if (this.state.message === false) {
             alert = '';
         } else {
             alert = <div className="alert alert-success" role="alert">{this.state.message_text}</div>;
         }
 
         let alert2;
-        if (this.state.empty_field == false) {
+        if (this.state.empty_field === false) {
             alert2 = '';
         } else {
             alert2 = <div className="alert alert-warning" role="alert">Please fill out the fields first.</div>;

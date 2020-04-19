@@ -3,9 +3,8 @@ import React, { Component } from 'react'
 import SideNav from './Sidebar/SideNav';
 import '../stylesheets/togglecheck.css';
 import axios from 'axios';
-import DataTable, { createTheme } from 'react-data-table-component';
-import { Link } from "react-router-dom";
-import { confirmAlert } from 'react-confirm-alert'; // Import
+import DataTable from 'react-data-table-component';
+import { Link } from 'wouter';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 class Organization extends Component {
@@ -52,15 +51,7 @@ class Organization extends Component {
         {
             name: "Action",
             cell: row => <div>
-                <Link to={{
-                    pathname: "/update-organization",
-                    state: {
-                        id: row._id,
-                        name: row.name,
-                        transaction_id: row.transaction_id,
-                        email: row.email
-                    }
-                }} className="btn btn-success btn-sm">Edit</Link>
+                <Link to="/update-organization" className="btn btn-success btn-sm">Edit</Link>
                     &nbsp; &nbsp;
                 <button onClick={() => { if (window.confirm('Are you sure you wish to delete this organization?')) this.deleteRow(row._id) }} className="btn btn-danger btn-sm">Delete</button>
 
@@ -71,11 +62,6 @@ class Organization extends Component {
 
 
     componentDidMount() {
-        // const url = "http://localhost:8888/.netlify/functions/readOrganization";
-        // const response = await fetch(url);
-        // const data = await response.json();
-        // console.log(data);
-        // this.setState({ orgs: data })
 
         axios.get('/.netlify/functions/readOrganization')
             .then((data) => {
@@ -106,27 +92,6 @@ class Organization extends Component {
         let active = !this.state.isActive;
         console.log(active);
         this.setState({ isActive: active });
-        // axios({
-        //     method: 'put',
-        //     url: '/.netlify/functions/updateOrganization',
-        //     headers: {
-        //         'Accept': "application/json",
-        //     },
-        //     data: {
-        //         "id": id,
-        //         "organization": {
-        //             "active": this.state.isActive
-        //         }
-        //     }
-        // })
-        //     .then((data) => {
-        //         // setUserSession(response.data.token, response.data.user);
-        //         console.log(data);
-        //         this.setState({ active: !this.state.isActive })
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
     }
 
     deleteRow = (id) => {
@@ -141,7 +106,6 @@ class Organization extends Component {
             }
         })
             .then((data) => {
-                // setUserSession(response.data.token, response.data.user);
                 // console.log(data);
                 let updated_orgs = current_orgs.filter(org => org._id !== id)
                 this.setState({ orgs: updated_orgs });
@@ -154,9 +118,7 @@ class Organization extends Component {
     render() {
         return (
             <div className="d-flex" id="wrapper">
-
                 <SideNav></SideNav>
-
                 {
                     this.state.loading || !this.state.msg ? (
                         <div className="parent-loader"><div className="loader"></div></div>
@@ -173,7 +135,7 @@ class Organization extends Component {
                                         <div className="col-12">
                                             <div className="firm-box">
                                                 <h5 className="heading">All Organizations</h5>
-                                                <Link to="/add-organization" className="btn btn-primary primary-btn">Add Organization</Link>
+                                                <a href="/add-organization" className="btn btn-primary primary-btn">Add Organization</a>
 
                                                 {/* <Table data={this.state.orgs}></Table> */}
                                                 <DataTable

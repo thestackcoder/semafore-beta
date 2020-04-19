@@ -3,11 +3,7 @@ import Navlist from './Navlist';
 import Profile from './Profile';
 import "../../stylesheets/Sidebar.css";
 import logo from "../../images/logo.png";
-import {
-    // BrowserRouter as Router,
-    Link
-} from "react-router-dom";
-
+import { Link } from "wouter";
 
 function SideNav() {
     return (

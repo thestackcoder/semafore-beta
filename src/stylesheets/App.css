@@ -282,18 +282,26 @@ footer{
 .login-box input{
   height: 50px;
   background-color: #444;
-  color: #aaa !important;
+  color: #ddd !important;
   border: none;
   font-size: 18px;
   border-radius: 0px;
+  margin-top: 15px;
 }
 
-.login-box input:focus{
+.list-group-item:hover{
+  cursor: pointer;
+}
+
+.login-box input:focus,
+.login-box input:visited{
   background-color: #444;
   border-color: #01A499;
   box-shadow: none;
   outline: 0 none !important;
 }
+
+
 
 .login-logo{
   width: 100px
@@ -304,13 +312,13 @@ footer{
   font-weight: 500;
   font-size: 22px;
   margin-top: 10px;
-  margin-bottom: 20px;
   display: block;
 }
 
 .btn-default{
-  background-color: #01A499;
-  color: #fff;
+  background-color: #01A499 !important;
+  color: #fff !important;
+  font-weight: 500;
 }
 
 
