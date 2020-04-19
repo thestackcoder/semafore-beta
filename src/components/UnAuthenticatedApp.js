@@ -28,9 +28,9 @@ function UnAuthenticatedApp() {
                 <Route path="/add-organization">
                     <Redirect to="login" />
                 </Route>
-                <Route path="/update-organization">
+                {/* <Route path="/update-organization/:params">
                     <Redirect to="login" />
-                </Route>
+                </Route> */}
                 <Route path="/billing">
                     <Redirect to="login" />
                 </Route>

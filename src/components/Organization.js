@@ -7,6 +7,8 @@ import DataTable from 'react-data-table-component';
 import { Link } from 'wouter';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
+import { useLocation } from "wouter";
+
 class Organization extends Component {
 
     state = {
@@ -51,7 +53,7 @@ class Organization extends Component {
         {
             name: "Action",
             cell: row => <div>
-                <Link to="/update-organization" className="btn btn-success btn-sm">Edit</Link>
+                <Link to={"/update-organization/" + row._id + ',' + row.name + ',' + row.email} className="btn btn-success btn-sm">Edit</Link>
                     &nbsp; &nbsp;
                 <button onClick={() => { if (window.confirm('Are you sure you wish to delete this organization?')) this.deleteRow(row._id) }} className="btn btn-danger btn-sm">Delete</button>
 

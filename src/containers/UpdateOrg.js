@@ -19,9 +19,11 @@ class UpdateOrg extends Component {
     }
 
     componentDidMount() {
-        const { name, id, transaction_id, email } = this.props.location.state;
+        const name = this.props.name;
+        const email = this.props.email;
+        const id = this.props.id;
 
-        this.setState({ name: name, transaction_id: transaction_id, id: id, email: email });
+        this.setState({ id: id, name: name, email: email });
     }
 
     handleChange(event) {

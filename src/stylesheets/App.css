@@ -294,10 +294,11 @@ footer{
 }
 
 .login-box input:focus,
-.login-box input:visited{
-  background-color: #444;
-  border-color: #01A499;
-  box-shadow: none;
+.login-box input:visited,
+.login-box input:active{
+  background-color: #444 !important;
+  border-color: #01A499 !important;
+  box-shadow: none !important;
   outline: 0 none !important;
 }
 
