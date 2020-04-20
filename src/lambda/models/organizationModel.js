@@ -26,6 +26,10 @@ const OrganzationSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    role: {
+        type: String,
+        default: 'organizational_admin'
     }
 });
 

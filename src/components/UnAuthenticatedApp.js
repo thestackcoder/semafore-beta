@@ -1,15 +1,8 @@
 import React from "react";
 import Footer from "./Footer";
 import { Login } from "../containers/Login";
-// import {
-//     Redirect
-// } from "react-router-dom";
-// import {
-//     Switch,
-//     Route
-// } from 'react-router';
 import { Route, Switch, Redirect } from "wouter";
-
+import logo from "../images/logo.png";
 
 function UnAuthenticatedApp() {
     return (
@@ -31,23 +24,33 @@ function UnAuthenticatedApp() {
                 {/* <Route path="/update-organization/:params">
                     <Redirect to="login" />
                 </Route> */}
+                <Route path="/settings/:email,:id">
+                    <Redirect to="login" />
+                </Route>
                 <Route path="/billing">
                     <Redirect to="login" />
                 </Route>
-                <Route path="/settings">
+                <Route path="/organizational-dashboard" >
+                    <Redirect to="login" />
+                </Route>
+                <Route path="/employees">
+                    <Redirect to="login" />
+                </Route>
+                <Route path="/organizational-billing">
+                    <Redirect to="login" />
+                </Route>
+                <Route path="/organizational-settings">
+                    <Redirect to="login" />
+                </Route>
+                <Route path="/screenshots">
                     <Redirect to="login" />
                 </Route>
                 <Route path="/login">
                     <Login />
                 </Route>
-
-                <Route path="/:rest*">404, not found!</Route>
-
-                {/* <Route path="/organizational-dashboard" component={Omain} />
-            <Route path="/employees" component={Employees} />
-            <Route path="/organizational-billing" component={Obilling} />
-            <Route path="/organizational-settings" component={OSettings} />
-            <Route path="/screenshots" component={Screenshots} /> */}
+                <Route path="/:rest*">
+                    <div className="not-found"><img alt="logo" src={logo} />404, page not found!</div>
+                </Route>
 
             </Switch>
 

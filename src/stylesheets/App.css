@@ -401,3 +401,15 @@ footer{
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.not-found{
+  padding: 40px;
+  background-color: #16222a;
+  color: #fff;
+  font-size: 40px;
+}
+
+.not-found img{
+  width: 100px;
+  margin-right: 20px;
+}

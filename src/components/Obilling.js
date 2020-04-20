@@ -1,30 +1,27 @@
 import React, { Component } from 'react'
-import SideNav from './Sidebar/SideNav';
-import "../stylesheets/togglecheck.css";
+import SideNav from './ClientSidebar/SideNav';
 import { Link } from 'wouter';
 import DataTable from 'react-data-table-component';
 
-
-class Billing extends Component {
-
+class Obilling extends Component {
     state = {
         loading: true,
         msg: null,
         isActive: false,
-        orgs: [{ id: "21344534534534", name: "Adidas", transaction_id: "123HGhYU" }],
+        orgs: [{ amount: "$35", currency: "USD (US$)", transaction_id: "123HGhYU" }],
         toggledClearRows: false,
         rowsData: []
     }
 
     columns = [
         {
-            name: 'ID',
-            selector: 'id',
+            name: 'Amount',
+            selector: 'amount',
             sortable: true,
         },
         {
-            name: 'Name',
-            selector: 'name',
+            name: 'Currency Type',
+            selector: 'currency',
             sortable: true,
         },
         {
@@ -75,11 +72,10 @@ class Billing extends Component {
                         <div className="das m-auto">Billing</div>
                     </nav>
                     <div className="container">
-                        <div className="row mt-1">
+                        <div className="row mt-4">
                             <div className="col-12">
                                 <div className="firm-box">
                                     <h5>Billing Details</h5>
-                                    {/* <Table data={this.dataSet}></Table> */}
                                     <DataTable
                                         columns={this.columns}
                                         selectableRows // add for checkbox selection
@@ -103,4 +99,4 @@ class Billing extends Component {
     }
 }
 
-export default Billing;
+export default Obilling;

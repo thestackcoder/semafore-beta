@@ -21,6 +21,10 @@ const UserSchema = new Schema({
     regitered_date: {
         type: Date,
         default: Date.now
+    },
+    role: {
+        type: String,
+        default: 'super_admin'
     }
 });
 

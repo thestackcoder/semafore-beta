@@ -1,35 +1,38 @@
 import React, { Component } from 'react'
-import SideNav from './Sidebar/SideNav';
-import "../stylesheets/togglecheck.css";
+import SideNav from './ClientSidebar/SideNav';
 import { Link } from 'wouter';
 import DataTable from 'react-data-table-component';
 
 
-class Billing extends Component {
-
+class Employees extends Component {
     state = {
         loading: true,
         msg: null,
         isActive: false,
-        orgs: [{ id: "21344534534534", name: "Adidas", transaction_id: "123HGhYU" }],
+        orgs: [{ name: "John Doe", phone: "+12385934545", phone_type: 'android', joined_date: "2020-07-03" }],
         toggledClearRows: false,
         rowsData: []
     }
 
     columns = [
         {
-            name: 'ID',
-            selector: 'id',
-            sortable: true,
-        },
-        {
-            name: 'Name',
+            name: 'Employee Name',
             selector: 'name',
             sortable: true,
         },
         {
-            name: 'Transaction ID',
-            selector: 'transaction_id',
+            name: 'Phone Number',
+            selector: 'phone',
+            sortable: true,
+        },
+        {
+            name: 'Phone Type',
+            selector: 'phone_type',
+            sortable: true,
+        },
+        {
+            name: 'Joined Date',
+            selector: 'joined_date',
             sortable: true,
         },
         {
@@ -72,14 +75,18 @@ class Billing extends Component {
                         {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button> */}
-                        <div className="das m-auto">Billing</div>
+                        <div className="das m-auto">Employees</div>
                     </nav>
                     <div className="container">
-                        <div className="row mt-1">
+                        <div className="row mt-2">
                             <div className="col-12">
+                                <div className="mb-3">
+                                    <button class="btn btn-default">Add New</button>
+                                    <button class="btn btn-default float-right">Import CSV</button>
+                                </div>
                                 <div className="firm-box">
-                                    <h5>Billing Details</h5>
-                                    {/* <Table data={this.dataSet}></Table> */}
+                                    <h5>All Employees</h5>
+                                    {/* <Etable data={this.dataSet}></Etable>*/}
                                     <DataTable
                                         columns={this.columns}
                                         selectableRows // add for checkbox selection
@@ -103,4 +110,4 @@ class Billing extends Component {
     }
 }
 
-export default Billing;
+export default Employees;

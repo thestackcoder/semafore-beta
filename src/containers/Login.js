@@ -12,11 +12,13 @@ function Login() {
       name: "email",
       type: "email",
       placeholder: "Email",
+      key: 1
     },
     {
       name: "password",
       type: "password",
-      placeholder: "Password"
+      placeholder: "Password",
+      key: 2
     }
   ];
 

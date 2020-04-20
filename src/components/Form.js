@@ -25,6 +25,7 @@ function Form(props) {
                     <FormGroup controlId="email">
                         {props.inputs.map(i => (
                             <input
+                                key={i.key}
                                 className="form-control"
                                 value={input[i.name] || ""}
                                 type={i.type}
@@ -36,7 +37,7 @@ function Form(props) {
                             />
                         ))}
                     </FormGroup>
-                    <input className="btn btn-default btn-block" type="submit" value={`Login${loading ? "g in" : ""}`} />
+                    <input className="btn btn-default btn-block" type="submit" value={`Login${loading ? "g" : ""}`} />
                 </fieldset>
             </form>
         </>

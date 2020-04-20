@@ -12,16 +12,17 @@ import db from './server';
 
 // Load the User Model
 import User from './models/userModel';
+import Organization from './models/organizationModel';
 
 //Creating a cookie
 
-function createJwtCookie(userId, email) {
+function createJwtCookie(userId, email, role) {
   const secretKey =
     "-----BEGIN RSA PRIVATE KEY-----\n" +
     process.env.JWT_SECRET_KEY +
     "\n-----END RSA PRIVATE KEY-----";
 
-  const token = jwt.sign({ userId, email }, secretKey, {
+  const token = jwt.sign({ userId, email, role }, secretKey, {
     algorithm: "RS256",
     expiresIn: "100 days",
   });
@@ -42,19 +43,44 @@ exports.handler = async (event, context) => {
     const { email, password } = JSON.parse(event.body);
 
     const existingUser = await User.findOne({ email });
-    if (existingUser == null) {
+    const existingOrg = await Organization.findOne({ email });
+
+    if (existingUser == null && existingOrg == null) {
       errorStatusCode = 401
-      throw new Error(`Invalid password or email`)
+      throw new Error(`Invalid email`)
     }
 
-    const matches = await bcrypt.compare(password, existingUser.password)
-    if (!matches) {
-      errorStatusCode = 401
-      throw new Error(`Invalid password or email`)
+    let role = '';
+
+    if (existingUser) {
+      role = existingUser.role;
+
+      const matches = await bcrypt.compare(password, existingUser.password)
+      if (!matches) {
+        errorStatusCode = 401
+        throw new Error(`Invalid password`)
+      }
+    } else if (existingOrg) {
+      role = existingOrg.role;
+
+      const matches_org = await bcrypt.compare(password, existingOrg.password)
+      if (!matches_org) {
+        errorStatusCode = 401
+        throw new Error(`Invalid password`)
+      }
+    } else {
     }
 
-    const userId = existingUser._id;
-    const jwtCookie = createJwtCookie(userId, email);
+    let userId = '';
+
+    if (existingUser) {
+      userId = existingUser._id;
+    } else if (existingOrg) {
+      userId = existingOrg._id;
+    } else {
+    }
+
+    const jwtCookie = createJwtCookie(userId, email, role);
 
     return {
       statusCode: 200,
@@ -62,7 +88,7 @@ exports.handler = async (event, context) => {
         "Set-Cookie": jwtCookie,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: userId, email, msg: "Successfullly logged in!" }),
+      body: JSON.stringify({ id: userId, email, role, msg: "Successfullly logged in!" }),
     }
 
   } catch (err) {
