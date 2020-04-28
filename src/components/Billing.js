@@ -4,7 +4,6 @@ import "../stylesheets/togglecheck.css";
 import { Link } from 'wouter';
 import DataTable from 'react-data-table-component';
 
-
 class Billing extends Component {
 
     state = {
@@ -28,7 +27,7 @@ class Billing extends Component {
             sortable: true,
         },
         {
-            name: 'Transaction ID',
+            name: 'Payment Method',
             selector: 'transaction_id',
             sortable: true,
         },
@@ -44,10 +43,8 @@ class Billing extends Component {
         {
             name: "Action",
             cell: row => <div>
-                <Link className="btn btn-success btn-sm">Edit</Link>
+                <Link className="btn btn-success btn-sm">Subscribe</Link>
                     &nbsp; &nbsp;
-                <button className="btn btn-danger btn-sm">Delete</button>
-
             </div>,
         }
 
@@ -77,6 +74,7 @@ class Billing extends Component {
                     <div className="container">
                         <div className="row mt-1">
                             <div className="col-12">
+
                                 <div className="firm-box">
                                     <h5>Billing Details</h5>
                                     {/* <Table data={this.dataSet}></Table> */}
