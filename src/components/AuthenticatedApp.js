@@ -5,8 +5,9 @@ import Billing from "./Billing";
 import Settings from "./Settings";
 import Footer from "./Footer";
 import AddOrg from '../containers/AddOrg';
+import StripeApp from './StripeApp';
 import UpdateOrg from '../containers/UpdateOrg';
-import { Route, Switch, Redirect } from "wouter";
+import { Route, Switch, Redirect, Link } from "wouter";
 import logo from "../images/logo.png";
 
 function AuthenticatedApp() {
@@ -25,6 +26,9 @@ function AuthenticatedApp() {
                     {params => <UpdateOrg id={params.id} name={params.name} email={params.email} />}
                 </Route>
                 <Route path="/billing" component={Billing} />
+                <Route path="/payment/:id" component={StripeApp}>
+                    {params => <StripeApp id={params.id} />}
+                </Route>
                 <Route path="/settings/:email,:id">
                     {params => <Settings email={params.email} id={params.id} />}
                 </Route>
@@ -32,7 +36,13 @@ function AuthenticatedApp() {
                     <Redirect to="/" />
                 </Route>
 
-                <Route path="/:rest*"><div className="not-found"><img alt="logo" src={logo} />404, page not found!</div></Route>
+                <Route path="/:rest*">
+                    <div className="not-found">
+                        <img alt="logo" src={logo} />
+                        <span>404, page not found!</span>
+                        <Link to="/">Go to dashboard</Link>
+                    </div>
+                </Route>
 
                 {/* <Route path="/organizational-dashboard" component={Omain} />
                 <Route path="/employees" component={Employees} />

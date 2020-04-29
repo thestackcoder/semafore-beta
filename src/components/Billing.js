@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import SideNav from './Sidebar/SideNav';
 import "../stylesheets/togglecheck.css";
+import axios from 'axios';
 import { Link } from 'wouter';
 import DataTable from 'react-data-table-component';
 
@@ -10,15 +11,16 @@ class Billing extends Component {
         loading: true,
         msg: null,
         isActive: false,
-        orgs: [{ id: "21344534534534", name: "Adidas", transaction_id: "123HGhYU" }],
+        orgs: [],
         toggledClearRows: false,
-        rowsData: []
+        rowsData: [],
+        status: ''
     }
 
     columns = [
         {
             name: 'ID',
-            selector: 'id',
+            selector: '_id',
             sortable: true,
         },
         {
@@ -27,8 +29,18 @@ class Billing extends Component {
             sortable: true,
         },
         {
+            name: 'Email',
+            selector: 'email',
+            sortable: true,
+        },
+        {
             name: 'Payment Method',
-            selector: 'transaction_id',
+            selector: 'payment_method',
+            sortable: true,
+        },
+        {
+            name: 'Status',
+            selector: 'status',
             sortable: true,
         },
         {
@@ -42,60 +54,69 @@ class Billing extends Component {
         },
         {
             name: "Action",
-            cell: row => <div>
-                <Link className="btn btn-success btn-sm">Subscribe</Link>
-                    &nbsp; &nbsp;
-            </div>,
+            cell: row =>
+                <div>
+                    <Link to={"/payment/" + row._id
+                    } className="btn btn-success btn-sm" > Subscribe</Link>
+                </div >
         }
 
     ]
 
-    handleClearRows = () => {
-        this.setState({ toggledClearRows: !this.state.toggledClearRows });
-    }
+    componentDidMount() {
 
-    handleCheckClick = () => {
-        let active = !this.state.isActive;
-        console.log(active);
-        this.setState({ isActive: active });
+        axios.get('/.netlify/functions/readOrganization')
+            .then((data) => {
+                // setUserSession(response.data.token, response.data.user);
+                var res = data.data.data;
+                // let arr = res.map(obj => Object.values(obj));
+                this.setState({ status: data.data.status, loading: false, msg: data.data.msg, orgs: res });
+                // console.log(this.state.orgs);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     render() {
         return (
             <div className="d-flex" id="wrapper">
                 <SideNav></SideNav>
-                <div id="page-content-wrapper">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                        {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                {
+                    this.state.loading || !this.state.msg ? (
+                        <div className="parent-loader"><div className="loader"></div></div>
+                    ) : (
+                            <div id="page-content-wrapper">
+                                <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                                    {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button> */}
-                        <div className="das m-auto">Billing</div>
-                    </nav>
-                    <div className="container">
-                        <div className="row mt-1">
-                            <div className="col-12">
+                                    <div className="das m-auto">Billing</div>
+                                </nav>
+                                <div className="container">
+                                    <div className="row mt-1">
+                                        <div className="col-12">
 
-                                <div className="firm-box">
-                                    <h5>Billing Details</h5>
-                                    {/* <Table data={this.dataSet}></Table> */}
-                                    <DataTable
-                                        columns={this.columns}
-                                        selectableRows // add for checkbox selection
-                                        data={this.state.orgs}
-                                        onSelectedRowsChange={this.handleChange}
-                                        clearSelectedRows={this.state.toggledClearRows}
-                                        pagination
-                                        fixedHeader
-                                        selectableRowsHighlight
-                                        selectableRowsNoSelectAll
-                                    // onSelectedRowsChange={this.deleteRow}
-                                    // expandableRows
-                                    />
+                                            <div className="firm-box">
+                                                <h5>Billing Details</h5>
+                                                {/* <Table data={this.dataSet}></Table> */}
+                                                <DataTable
+                                                    columns={this.columns}
+                                                    data={this.state.orgs}
+                                                    pagination
+                                                    fixedHeader
+                                                    selectableRowsHighlight
+                                                    selectableRowsNoSelectAll
+                                                // onSelectedRowsChange={this.deleteRow}
+                                                // expandableRows
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        )
+                }
             </div>
         )
     }

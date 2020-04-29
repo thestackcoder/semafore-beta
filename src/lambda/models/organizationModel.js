@@ -31,6 +31,16 @@ const OrganzationSchema = new Schema({
         type: String,
         default: 'organizational_admin'
     }
+    ,
+    payment_method: {
+        type: String,
+        default: ''
+    }
+    ,
+    status: {
+        type: String,
+        default: ''
+    }
 });
 
 module.exports = Organization = mongoose.model('organization', OrganzationSchema);

@@ -172,16 +172,21 @@ td, th {
 
 /* Settings form */
 
-.settings_form label{
+.settings_form label,
+.payment_form label{
   font-weight: 600;
 }
 
-.settings_form input{
+.settings_form input,
+.payment_form input,
+.payment_form select{
   border-radius: 0px;
   height: 40px;
 }
 
-.settings_form input:focus{
+.settings_form input:focus,
+.payment_form input:focus,
+.payment_form select:focus{
   border-color: #01A499;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(1, 164, 153, 0.555);
   outline: 0 none;
@@ -260,6 +265,20 @@ footer{
   border-radius: 0px;
   border: none;
 }
+
+.payment_form button{
+  background-color: #01A499 !important; 
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 0px;
+}
+
+.payment_form button:hover{
+  box-shadow: 3px 3px 7px #aaa;
+  transition: 0.3s;
+  background-color: rgba(1, 164, 153, 0.959);
+}
+
 
 .heading{
   display: inline-block;
@@ -405,9 +424,24 @@ footer{
 .not-found{
   padding: 40px;
   background-color: #16222a;
+}
+
+.not-found span{
   color: #fff;
   font-size: 40px;
 }
+
+.not-found a{
+  margin-left: 30px;
+  color: #d1d1d1;
+  text-decoration: underline !important;
+  font-size: 18px;
+}
+
+.not-found a:hover{
+  color: #fff;
+}
+
 
 .not-found img{
   width: 100px;

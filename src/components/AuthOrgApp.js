@@ -6,7 +6,7 @@ import OSettings from './OSettings';
 import Screenshots from './Screenshots';
 import Footer from "./Footer";
 import logo from "../images/logo.png";
-import { Route, Switch, Redirect } from "wouter";
+import { Route, Switch, Redirect, Link } from "wouter";
 
 function AuthOrgApp() {
     return (
@@ -27,6 +27,13 @@ function AuthOrgApp() {
 
                 <Route path="/:rest*">
                     <div className="not-found"><img alt="logo" src={logo} /> 404, page not found!</div>
+                </Route>
+                <Route path="/:rest*">
+                    <div className="not-found">
+                        <img alt="logo" src={logo} />
+                        <span>404, page not found!</span>
+                        <Link to="/login">Go to Login Page</Link>
+                    </div>
                 </Route>
 
             </Switch>

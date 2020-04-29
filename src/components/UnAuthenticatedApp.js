@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from "./Footer";
 import { Login } from "../containers/Login";
-import { Route, Switch, Redirect } from "wouter";
+import { Route, Switch, Redirect, Link } from "wouter";
 import logo from "../images/logo.png";
 
 function UnAuthenticatedApp() {
@@ -48,10 +48,14 @@ function UnAuthenticatedApp() {
                 <Route path="/login">
                     <Login />
                 </Route>
-                <Route path="/:rest*">
-                    <div className="not-found"><img alt="logo" src={logo} />404, page not found!</div>
-                </Route>
 
+                <Route path="/:rest*">
+                    <div className="not-found">
+                        <img alt="logo" src={logo} />
+                        <span>404, page not found!</span>
+                        <Link to="/login">Go to Login Page</Link>
+                    </div>
+                </Route>
             </Switch>
 
             <Footer></Footer>
