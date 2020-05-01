@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import SideNav from './Sidebar/SideNav';
+import SideNav from './ClientSidebar/SideNav';
+
 
 class StripeApp extends Component {
     constructor(props) {
@@ -12,9 +13,11 @@ class StripeApp extends Component {
             expYear: '',
             expMonth: '',
             cardNumber: '',
-            formProcess: false
-        };
+            formProcess: false,
+            subscriptionPlan: ''
+        }
     }
+
 
     // stripe = require('stripe')('sk_test_vk9uEEhDsKaSPsnGqQNPPNaM00qdR5u7CO');
 
@@ -25,7 +28,6 @@ class StripeApp extends Component {
     componentDidMount() {
         const id = this.props.id;
         this.setState({ id: id });
-        console.log(this.state.id);
         this.loadStripe();
     }
 
@@ -35,64 +37,8 @@ class StripeApp extends Component {
         });
     }
 
-    // pay = (e) => {
-    //     e.preventDefault();
 
-    //     this.setState({
-    //         formProcess: true
-    //     });
-
-    //     console.log(this.state.cvc);
-
-    //     // this.stripe.tokens.create(
-    //     //     {
-    //     //         card: {
-    //     //             number: this.state.cardNumber,
-    //     //             exp_month: this.state.expMonth,
-    //     //             exp_year: this.state.expYear,
-    //     //             cvc: this.state.cvc
-    //     //         },
-    //     //     },
-    //     //     function (err, token) {
-    //     //         this.createCustomer(token.id);
-    //     //         this.setState({ message: token.id, formProcess: false });
-    //     //         console.log(token)
-    //     //     }
-    //     // );
-    //     const formData = new FormData();
-
-    //     formData.append('card[number]', this.state.cardNumber);
-    //     formData.append('card[exp_month]', this.state.expMonth);
-    //     formData.append('card[exp_year]', this.state.expYear);
-    //     formData.append('card[cvc]', this.state.cvc);
-
-    //     fetch('https://api.stripe.com/v1/tokens', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded',
-    //             'Authorization': 'Bearer sk_test_vk9uEEhDsKaSPsnGqQNPPNaM00qdR5u7CO'
-    //         },
-    //         body: formData
-    //     })
-    //         .then(response => response.json())
-    //         .then(result => {
-    //             console.log('Success:', result);
-    //             this.setState({
-    //                 message: result.id,
-    //                 formProcess: false
-    //             });
-    //         })
-    //         .catch(error => {
-    //             console.error('Error:', error);
-    //             this.setState({
-    //                 message: error.message,
-    //                 formProcess: false
-    //             });
-    //         });
-
-    // }
-
-    createCustomer = (id) => {
+    createCustomerAndSubscription = (id) => {
         // e.preventDefault();
         console.log(id);
         // this.setState({
@@ -102,55 +48,86 @@ class StripeApp extends Component {
         // let formData = new FormData();
         // formData.append('source', id);
 
+        const customer = {
+            'description': 'New Customer',
+            'source': id,
+        };
+
+
 
         fetch('https://api.stripe.com/v1/customers', {
             method: 'POST',
             headers: {
+                'Accept': 'application/json',
                 'Authorization': 'Bearer sk_test_vk9uEEhDsKaSPsnGqQNPPNaM00qdR5u7CO',
-                'Content-Type': 'application/form-data'
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
+            body: Object.keys(customer)
+                .map(key => key + '=' + customer[key])
+                .join('&')
         })
             .then(response => response.json())
             .then(result => {
                 console.log('Success:', result);
                 console.log(this.state.id);
-                // fetch('https://api.stripe.com/v1/customers/' + result.id + '/sources', {
-                //     method: 'POST',
-                //     headers: {
-                //         'Authorization': 'Bearer sk_test_vk9uEEhDsKaSPsnGqQNPPNaM00qdR5u7CO',
-                //     },
-                //     body: {
-                //         'cus_HBjduXYbb4Jpiy',
-                //         { source: 'tok_mastercard' },
-                //     }
-                // }).then(res => {
-                //     console.log(res);
-                // })
-                axios({
-                    method: 'put',
-                    url: '/.netlify/functions/updateOrganization',
+
+                const subscription = {
+                    'customer': result.id,
+                    'items[0][plan]': this.state.subscriptionPlan,
+                };
+
+                fetch('https://api.stripe.com/v1/subscriptions', {
+                    method: 'POST',
                     headers: {
-                        'Accept': "application/json",
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer sk_test_vk9uEEhDsKaSPsnGqQNPPNaM00qdR5u7CO',
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    data: {
-                        "id": "5ea9ee397cfdac41c829dc48",
-                        "organization": {
-                            "status": "True", "payment_method": "Monthly (Fixed)"
-                        }
-                    }
+                    body: Object.keys(subscription)
+                        .map(key => key + '=' + subscription[key])
+                        .join('&')
                 })
-                    .then((data) => {
-                        // setUserSession(response.data.token, response.data.user);
-                        console.log(data);
+                    .then(response => response.json())
+                    .then(result => {
+                        console.log('Success:', result);
+                        if (result.status === 'active') {
+                            this.setState({
+                                message: 'User suscribed for  ' + result.items.data[0].plan.nickname,
+                            });
+                        }
+                        axios({
+                            method: 'put',
+                            url: '/.netlify/functions/updateOrganization',
+                            headers: {
+                                'Accept': "application/json",
+                            },
+                            data: {
+                                "id": this.state.id,
+                                "organization": {
+                                    "status": "True", "payment_method": result.items.data[0].plan.nickname
+                                }
+                            }
+                        })
+                            .then((data) => {
+                                // setUserSession(response.data.token, response.data.user);
+                                console.log(data);
+                                this.setState({
+                                    formProcess: false
+                                });
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            });
+
+
                     })
                     .catch(error => {
-                        console.log(error);
+                        console.error('Error:', error);
+                        this.setState({
+                            message: error.message,
+                            formProcess: false
+                        });
                     });
-
-                this.setState({
-                    message: 'User suscribed for monthly package, ' + result.id,
-                    formProcess: false
-                });
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -177,9 +154,8 @@ class StripeApp extends Component {
             cvc: this.state.cvc
         }, (status, response) => {
             if (status === 200) {
-                this.createCustomer(response.id);
+                this.createCustomerAndSubscription(response.id);
                 // this.setState({
-                //     message: response.id,
                 //     formProcess: false
                 // });
             } else {
@@ -237,12 +213,26 @@ class StripeApp extends Component {
                                                                     )
                                                             }
                                                             <div className="row">
-                                                                <div className="col-xs-12 col-md-12">
+                                                                <div className="col-xs-6 col-md-6">
                                                                     <div className="form-group">
                                                                         <label>Card Number</label>
                                                                         <div className="input-group">
                                                                             <input required type="text" className="form-control" placeholder="Valid Card Number" name="cardNumber" maxLength="18" onChange={this.handleChange} />
                                                                             <span className="input-group-addon"><span className="fa fa-credit-card"></span></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-xs-6 col-md-6">
+                                                                    <div className="form-group">
+                                                                        <label>Subscription Plan</label>
+                                                                        <div className="input-group">
+                                                                            <select required name="subscriptionPlan" className="form-control" onChange={this.handleChange}>
+                                                                                <option value="">Select Plan</option>
+                                                                                <option value="plan_HCLnmkUphAjOtD">Annual Billing (per employee)</option>
+                                                                                <option value="plan_HCLnsiWIp66uz6">Monthly Billing (per employee)</option>
+                                                                                <option value="plan_HCLmkhrjwUcgfV">Annual Billing (fixed)</option>
+                                                                                <option value="plan_HBDEzsHuEhN6NI">Monthly Billing (fixed)</option>
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>

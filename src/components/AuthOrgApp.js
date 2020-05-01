@@ -4,7 +4,7 @@ import Employees from './Employees';
 import Obilling from './Obilling';
 import OSettings from './OSettings';
 import Screenshots from './Screenshots';
-import Footer from "./Footer";
+import StripeApp from './StripeApp';
 import logo from "../images/logo.png";
 import { Route, Switch, Redirect, Link } from "wouter";
 
@@ -15,14 +15,25 @@ function AuthOrgApp() {
             {/* <div className="d-flex" id="wrapper"> */}
             {/* <SideNav></SideNav> */}
             <Switch>
+                <Route path="/">
+                    <Omain></Omain>
+                </Route>
                 <Route path="/organizational-dashboard" component={Omain} />
                 <Route path="/employees" component={Employees} />
-                <Route path="/organizational-billing" component={Obilling} />
+
+                <Route path="/organizational-billing/:id">
+                    {params => <Obilling id={params.id} />}
+                </Route>
+
                 <Route path="/organizational-settings" component={OSettings} />
                 <Route path="/screenshots" component={Screenshots} />
 
                 <Route path="/login">
                     <Redirect to="/organizational-dashboard" />
+                </Route>
+
+                <Route path="/payment/:id">
+                    {params => <StripeApp id={params.id} />}
                 </Route>
 
                 <Route path="/:rest*">
