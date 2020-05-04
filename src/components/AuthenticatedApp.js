@@ -2,6 +2,7 @@ import React from "react";
 import Main from "./Main";
 import Organization from "./Organization";
 import Billing from "./Billing";
+import AdminStripeApp from "./AdminStripeApp";
 import Settings from "./Settings";
 import Footer from "./Footer";
 import AddOrg from '../containers/AddOrg';
@@ -25,6 +26,9 @@ function AuthenticatedApp() {
                     {params => <UpdateOrg id={params.id} name={params.name} email={params.email} />}
                 </Route>
                 <Route path="/billing" component={Billing} />
+                <Route path="/payment/:id">
+                    {params => <AdminStripeApp id={params.id} />}
+                </Route>
                 <Route path="/settings/:email,:id">
                     {params => <Settings email={params.email} id={params.id} />}
                 </Route>

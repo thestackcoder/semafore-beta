@@ -57,11 +57,12 @@ class Billing extends Component {
             cell: row => {
                 if (this.state.status == 'canceled') {
                     return <div>
-                        <Link to={"/payment/" + row._id
-                        } className="btn btn-success btn-sm" > Update Plan</Link>
+                        <Link to={"/payment/" + row._id} className="btn btn-success btn-sm" > Update Plan</Link>
                     </div >
                 } else {
-                    return <button onClick={this.cancelSubscription} className="btn btn-danger btn-danger-main btn-sm">Cancel Subscription</button>;
+                    return (
+                        <button onClick={this.cancelSubscription} className="btn btn-danger btn-danger-main btn-sm">Cancel Subscription</button>
+                    );
                 }
             }
 
