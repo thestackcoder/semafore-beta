@@ -55,11 +55,14 @@ class Billing extends Component {
         {
             name: "Action",
             cell: row => {
-                if (this.state.status == 'canceled') {
+                if (row.status == 'canceled') {
                     return <div>
                         <Link to={"/payment/" + row._id} className="btn btn-success btn-sm" > Update Plan</Link>
                     </div >
-                } else {
+                } else if (row.status == '') {
+                    return <span></span>
+                }
+                else {
                     return (
                         <button onClick={this.cancelSubscription} className="btn btn-danger btn-danger-main btn-sm">Cancel Subscription</button>
                     );
@@ -77,7 +80,7 @@ class Billing extends Component {
                 // setUserSession(response.data.token, response.data.user);
                 var res = data.data.data;
                 // let arr = res.map(obj => Object.values(obj));
-                this.setState({ loading: false, status: data.data.data[0].status, msg: data.data.msg, orgs: res });
+                this.setState({ loading: false, status: data.data.data.status, msg: data.data.msg, orgs: res });
                 console.log(this.state.status);
             })
             .catch(error => {
@@ -86,42 +89,42 @@ class Billing extends Component {
     }
 
 
-    // cancelSubscription = () => {
-    //     axios.delete('https://api.stripe.com/v1/subscriptions/' + this.state.subs_id, {
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Authorization': 'Bearer sk_test_vk9uEEhDsKaSPsnGqQNPPNaM00qdR5u7CO',
-    //             'Content-Type': 'application/x-www-form-urlencoded'
-    //         }
-    //     })
-    //         .then((data) => {
-    //             console.log(data);
-    //             this.setState({ loading: false, org_status: data.data.status });
-    //             axios({
-    //                 method: 'put',
-    //                 url: '/.netlify/functions/updateOrganization',
-    //                 headers: {
-    //                     'Accept': "application/json",
-    //                 },
-    //                 data: {
-    //                     "id": this.state.id,
-    //                     "organization": {
-    //                         "status": this.state.org_status,
-    //                     }
-    //                 }
-    //             })
-    //                 .then((data) => {
-    //                     console.log(data);
-    //                 })
-    //                 .catch(error => {
-    //                     console.log(error);
-    //                 });
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         });
+    cancelSubscription = () => {
+        axios.delete('https://api.stripe.com/v1/subscriptions/' + this.state.subs_id, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer sk_test_vk9uEEhDsKaSPsnGqQNPPNaM00qdR5u7CO',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+            .then((data) => {
+                console.log(data);
+                this.setState({ loading: false, org_status: data.data.status });
+                axios({
+                    method: 'put',
+                    url: '/.netlify/functions/updateOrganization',
+                    headers: {
+                        'Accept': "application/json",
+                    },
+                    data: {
+                        "id": this.state.id,
+                        "organization": {
+                            "status": this.state.org_status,
+                        }
+                    }
+                })
+                    .then((data) => {
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            })
+            .catch(error => {
+                console.log(error);
+            });
 
-    // }
+    }
 
 
     render() {
