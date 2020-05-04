@@ -59,22 +59,26 @@ class OBilling extends Component {
             .then((data) => {
                 console.log(data);
                 this.setState({ org_status: data.data.data.status, subs_id: data.data.data.subscription_id });
-                axios.get('https://api.stripe.com/v1/payment_intents', {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer sk_test_vk9uEEhDsKaSPsnGqQNPPNaM00qdR5u7CO',
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    params: {
-                        customer: data.data.data.customer_id
-                    }
-                })
-                    .then((data) => {
-                        this.setState({ loading: false, payments: data.data.data });
+                if (data.data.data.status != '') {
+                    axios.get('https://api.stripe.com/v1/payment_intents', {
+                        headers: {
+                            'Accept': 'application/json',
+                            'Authorization': 'Bearer sk_test_vk9uEEhDsKaSPsnGqQNPPNaM00qdR5u7CO',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        params: {
+                            customer: data.data.data.customer_id
+                        }
                     })
-                    .catch(error => {
-                        console.log(error);
-                    });
+                        .then((data) => {
+                            this.setState({ loading: false, payments: data.data.data });
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                } else {
+                    this.setState({ loading: false });
+                }
             })
             .catch(error => {
                 console.log(error);
@@ -121,7 +125,7 @@ class OBilling extends Component {
 
     render() {
         let action;
-        if (this.state.org_status == 'canceled') {
+        if (this.state.org_status == 'canceled' || this.state.org_status == '') {
             action = <Link to={"/payment/" + this.state.id} className="btn btn-primary primary-btn">Update Subscription</Link>
         } else {
             action = <button onClick={this.cancelSubscription} className="btn btn-danger danger-btn">Cancel Subscription</button>
