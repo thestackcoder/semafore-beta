@@ -54,11 +54,17 @@ class Billing extends Component {
         },
         {
             name: "Action",
-            cell: row =>
-                <div>
-                    <Link to={"/payment/" + row._id
-                    } className="btn btn-success btn-sm" > Subscribe</Link>
-                </div >
+            cell: row => {
+                if (this.state.status == 'canceled') {
+                    return <div>
+                        <Link to={"/payment/" + row._id
+                        } className="btn btn-success btn-sm" > Update Plan</Link>
+                    </div >
+                } else {
+                    return <button onClick={this.cancelSubscription} className="btn btn-danger btn-danger-main btn-sm">Cancel Subscription</button>;
+                }
+            }
+
         }
 
     ]
@@ -70,13 +76,52 @@ class Billing extends Component {
                 // setUserSession(response.data.token, response.data.user);
                 var res = data.data.data;
                 // let arr = res.map(obj => Object.values(obj));
-                this.setState({ status: data.data.status, loading: false, msg: data.data.msg, orgs: res });
-                // console.log(this.state.orgs);
+                this.setState({ loading: false, status: data.data.data[0].status, msg: data.data.msg, orgs: res });
+                console.log(this.state.status);
             })
             .catch(error => {
                 console.log(error);
             });
     }
+
+
+    // cancelSubscription = () => {
+    //     axios.delete('https://api.stripe.com/v1/subscriptions/' + this.state.subs_id, {
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Authorization': 'Bearer sk_test_vk9uEEhDsKaSPsnGqQNPPNaM00qdR5u7CO',
+    //             'Content-Type': 'application/x-www-form-urlencoded'
+    //         }
+    //     })
+    //         .then((data) => {
+    //             console.log(data);
+    //             this.setState({ loading: false, org_status: data.data.status });
+    //             axios({
+    //                 method: 'put',
+    //                 url: '/.netlify/functions/updateOrganization',
+    //                 headers: {
+    //                     'Accept': "application/json",
+    //                 },
+    //                 data: {
+    //                     "id": this.state.id,
+    //                     "organization": {
+    //                         "status": this.state.org_status,
+    //                     }
+    //                 }
+    //             })
+    //                 .then((data) => {
+    //                     console.log(data);
+    //                 })
+    //                 .catch(error => {
+    //                     console.log(error);
+    //                 });
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         });
+
+    // }
+
 
     render() {
         return (
@@ -96,7 +141,6 @@ class Billing extends Component {
                                 <div className="container">
                                     <div className="row mt-1">
                                         <div className="col-12">
-
                                             <div className="firm-box">
                                                 <h5>Billing Details</h5>
                                                 {/* <Table data={this.dataSet}></Table> */}
