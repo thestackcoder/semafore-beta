@@ -55,7 +55,7 @@ class Organization extends Component {
             cell: row => <div>
                 <Link to={"/update-organization/" + row._id + ',' + row.name + ',' + row.email} className="btn btn-success btn-sm">Edit</Link>
                     &nbsp; &nbsp;
-                <button onClick={() => { if (window.confirm('Are you sure you wish to delete this organization?')) this.deleteRow(row._id) }} className="btn btn-danger btn-sm">Delete</button>
+                <button onClick={() => { if (window.confirm('Are you sure you wish to delete this organization?')) this.deleteRow(row._id) }} className="btn btn-danger btn-danger-main btn-sm">Delete</button>
 
             </div>,
         }

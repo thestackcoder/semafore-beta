@@ -104,7 +104,10 @@ class StripeApp extends Component {
                             data: {
                                 "id": this.state.id,
                                 "organization": {
-                                    "status": "True", "payment_method": result.items.data[0].plan.nickname
+                                    "status": result.status,
+                                    "payment_method": result.items.data[0].plan.nickname,
+                                    "customer_id": result.customer,
+                                    "subscription_id": result.id
                                 }
                             }
                         })

@@ -48,7 +48,13 @@ body {
   min-height: 40px !important;
 }
 
-.btn-danger{
+  /* .btn-danger{
+    padding: 2px 5px !important;
+    font-size: 11px !important;
+    border-radius: 2px !important;
+  } */
+
+.btn-danger-main{
   padding: 2px 5px !important;
   font-size: 11px !important;
   border-radius: 2px !important;
@@ -292,6 +298,21 @@ footer{
   border: none;
   color: #fff !important;
   float: right;
+}
+
+.danger-btn{
+  background-color: #dc3545 !important; 
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 0px;
+  border: none;
+  color: #fff !important;
+  float: right;
+  margin-right: 10px;
+}
+
+.danger-btn:hover{
+  background-color: #c22b3a !important; 
 }
 
 .primary-btn:hover{

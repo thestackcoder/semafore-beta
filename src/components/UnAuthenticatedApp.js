@@ -15,6 +15,12 @@ function UnAuthenticatedApp() {
                 <Route path="/">
                     <Redirect to="login" />
                 </Route>
+                <Route path="/organizational-billing/:id">
+                    <Redirect to="login" />
+                </Route>
+                <Route path="/organizational-billing/login">
+                    <Redirect to="login" />
+                </Route>
                 <Route path="/organization">
                     <Redirect to="login" />
                 </Route>

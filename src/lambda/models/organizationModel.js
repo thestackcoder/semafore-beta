@@ -30,13 +30,19 @@ const OrganzationSchema = new Schema({
     role: {
         type: String,
         default: 'organizational_admin'
-    }
-    ,
+    },
     payment_method: {
         type: String,
         default: ''
-    }
-    ,
+    },
+    customer_id: {
+        type: String,
+        default: ''
+    },
+    subscription_id: {
+        type: String,
+        default: ''
+    },
     status: {
         type: String,
         default: ''

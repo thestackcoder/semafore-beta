@@ -11,9 +11,15 @@ exports.handler = async (event, context) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
     try {
-        const id = JSON.parse(event.body), response = { msg: "Success", }
+        const id = JSON.parse(event.body);
+        const org = await Organization.findById(id),
+            response = {
+                msg: "Organization successfully found",
+                data: org
+            }
+        // const id = JSON.parse(event.body), response = { msg: "Success", }
 
-        await Organization.findById(id);
+        // await Organization.findById(id);
 
         return {
             statusCode: 200,

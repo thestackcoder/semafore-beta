@@ -81,8 +81,8 @@ class Employees extends Component {
                         <div className="row mt-2">
                             <div className="col-12">
                                 <div className="mb-3">
-                                    <button class="btn btn-default">Add New</button>
-                                    <button class="btn btn-default float-right">Import CSV</button>
+                                    <button className="btn btn-default">Add New</button>
+                                    <button className="btn btn-default float-right">Import CSV</button>
                                 </div>
                                 <div className="firm-box">
                                     <h5>All Employees</h5>
