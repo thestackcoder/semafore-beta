@@ -22,31 +22,6 @@ function Login() {
     }
   ];
 
-  // handleLogin = () => {
-  //   // setError(null);
-
-  //   axios({
-  //     method: 'post',
-  //     url: '/.netlify/functions/login',
-  //     headers: {
-  //       accept: 'Accept: application/json',
-  //     },
-  //     data: {
-  //       "email": this.state.email,
-  //       "password": this.state.password
-  //     }
-  //   })
-  //     .then(response => {
-  //       // setUserSession(response.data.token, response.data.user);
-  //       console.log(response.data);
-
-  //     })
-  //     .catch(error => {
-  //       // if (error.response.status === 401) setError(error.response.data.message);
-  //       // else setError("Something went wrong. Please try again later.");
-  //       console.log(error)
-  //     });
-  // }
 
 
   return (

@@ -8,6 +8,7 @@ import DataTable from 'react-data-table-component';
 class Billing extends Component {
 
     state = {
+        id: '',
         loading: true,
         msg: null,
         isActive: false,
@@ -55,18 +56,18 @@ class Billing extends Component {
         {
             name: "Action",
             cell: row => {
-                if (row.status == 'canceled') {
+                if (row.status == 'canceled' || row.status == 'active') {
                     return <div>
                         <Link to={"/payment/" + row._id} className="btn btn-success btn-sm" > Update Plan</Link>
                     </div >
                 } else if (row.status == '') {
                     return <span></span>
                 }
-                else {
-                    return (
-                        <button onClick={this.cancelSubscription} className="btn btn-danger btn-danger-main btn-sm">Cancel Subscription</button>
-                    );
-                }
+                // else {
+                //     return (
+                //         <button onClick={this.cancelSubscription} className="btn btn-danger btn-danger-main btn-sm">Cancel Subscription</button>
+                //     );
+                // }
             }
 
         }
