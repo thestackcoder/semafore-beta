@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import avatar from "../images/avatar.png";
-import SideNav from './Sidebar/SideNav';
 import axios from 'axios';
 
 class Settings extends Component {
@@ -82,55 +81,57 @@ class Settings extends Component {
         }
 
         return (
-            <div className="d-flex" id="wrapper">
-                <SideNav></SideNav>
-                <div id="page-content-wrapper">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                        {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <div id="page-content-wrapper">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button> */}
-                        <div className="das m-auto">Settings</div>
-                    </nav>
-                    <div className="container">
-                        <div className="row mt-1">
-                            <div className="col-10 offset-1">
-                                <div className="firm-box">
-                                    {this.state.empty_field ? alert2 : <span></span>}
-                                    {alert}
-                                    <div className="col-8 offset-md-2">
-                                        <form className="settings_form">
-                                            <div className="form-group text-center">
-                                                <img src={avatar} alt="user-profile-pic" />
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Email:</label>
-                                                <input
-                                                    type="email"
-                                                    className="form-control"
-                                                    id="fname"
-                                                    value={this.state.email}
-                                                    onChange={event => this.setState({ email: event.target.value })}
-                                                />
-                                            </div>
-                                            {/* <div className="form-group">
+                    <div className="das m-auto">Settings</div>
+                </nav>
+                <div className="container">
+                    <div className="row mt-1">
+                        <div className="col-10 offset-1">
+                            <div className="firm-box">
+                                {this.state.empty_field ? alert2 : <span></span>}
+                                {alert}
+                                <div className="col-8 offset-md-2">
+                                    <form className="settings_form">
+                                        <div className="form-group text-center">
+                                            <img src={avatar} alt="user-profile-pic" />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Email:</label>
+                                            <input
+                                                type="email"
+                                                className="form-control"
+                                                id="fname"
+                                                value={this.state.email}
+                                                onChange={event => this.setState({ email: event.target.value })}
+                                            />
+                                        </div>
+                                        {/* <div className="form-group">
                                                 <label>Current Password:</label>
                                                 <input type="text" className="form-control" id="pwd_1" value={this.state.current_password} />
                                             </div> */}
-                                            <div className="form-group">
-                                                <label>New Password:</label>
-                                                <input type="text" className="form-control" id="pwd_2" />
-                                            </div>
-                                            {/* <div className="form-group">
+                                        <div className="form-group">
+                                            <label>New Password:</label>
+                                            <input type="text" className="form-control" id="pwd_2" />
+                                        </div>
+                                        {/* <div className="form-group">
                                                 <label>Confirm New Password:</label>
                                                 <input type="password" className="form-control" id="pwd_3" />
                                             </div> */}
-                                            <div className="form-group text-center">
-                                                <button onClick={this.handleSubmit} type="submit" className="btn btn-default">
-                                                    {this.state.isLoading ? <div className="btn-loader"></div> : "Update"}
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
+                                        <div className="form-group text-center">
+                                            {/* <button onClick={this.handleSubmit} type="submit" className="btn btn-default">
+                                                {this.state.isLoading ? <div className="btn-loader"></div> : "Update"}
+                                            </button> */}
+                                            {(this.state.isLoading) ? (
+                                                <button className="btn btn-default" disabled>Please wait...</button>
+                                            ) : (
+                                                    <button onClick={this.handleSubmit} type="submit" className="btn btn-default">Update</button>
+                                                )}
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

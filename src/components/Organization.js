@@ -1,23 +1,24 @@
 import React, { Component } from 'react'
 // import Table from "./Table";
-import SideNav from './Sidebar/SideNav';
 import '../stylesheets/togglecheck.css';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import { Link } from 'wouter';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { set } from 'mongoose';
 
-import { useLocation } from "wouter";
 
 class Organization extends Component {
 
     state = {
         loading: true,
+        delLoad: false,
         msg: null,
         isActive: false,
         orgs: [],
         toggledClearRows: false,
-        rowsData: []
+        rowsData: [],
+        subs_id: ''
     }
 
     columns = [
@@ -56,7 +57,6 @@ class Organization extends Component {
                 <Link to={"/update-organization/" + row._id + ',' + row.name + ',' + row.email} className="btn btn-success btn-sm">Edit</Link>
                     &nbsp; &nbsp;
                 <button onClick={() => { if (window.confirm('Are you sure you wish to delete this organization?')) this.deleteRow(row._id) }} className="btn btn-danger btn-danger-main btn-sm">Delete</button>
-
             </div>,
         }
 
@@ -97,71 +97,125 @@ class Organization extends Component {
     }
 
     deleteRow = (id) => {
+        this.setState({ delLoad: true });
         console.log(id);
         let current_orgs = [...this.state.orgs];
-        axios.delete('/.netlify/functions/deleteOrganization', {
-            headers: {
-                'Content-Type': 'application/json',
+
+        axios('/.netlify/functions/getOrganization', {
+            method: 'post',
+            header: {
+                'Accept': "application/json",
             },
             data: {
                 "_id": id
             }
         })
             .then((data) => {
-                // console.log(data);
-                let updated_orgs = current_orgs.filter(org => org._id !== id)
-                this.setState({ orgs: updated_orgs });
+                console.log(data);
+                this.setState({ subs_id: data.data.data.subscription_id });
+                var subsId = data.data.data.subscription_id;
+                if (subsId) {
+                    axios.delete('https://api.stripe.com/v1/subscriptions/' + subsId, {
+                        headers: {
+                            'Accept': 'application/json',
+                            'Authorization': 'Bearer sk_test_vk9uEEhDsKaSPsnGqQNPPNaM00qdR5u7CO',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    })
+                        .then((data) => {
+                            console.log(data);
+                            axios.delete('/.netlify/functions/deleteOrganization', {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                data: {
+                                    "_id": id
+                                }
+                            })
+                                .then((data) => {
+                                    // console.log(data);
+                                    let updated_orgs = current_orgs.filter(org => org._id !== id)
+                                    this.setState({ orgs: updated_orgs, delLoad: false });
+                                })
+                                .catch(error => {
+                                    console.log(error);
+                                });
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                } else {
+                    axios.delete('/.netlify/functions/deleteOrganization', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        data: {
+                            "_id": id
+                        }
+                    })
+                        .then((data) => {
+                            // console.log(data);
+                            let updated_orgs = current_orgs.filter(org => org._id !== id)
+                            this.setState({ orgs: updated_orgs, delLoad: false });
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                }
+
             })
             .catch(error => {
                 console.log(error);
             });
+
+
     }
 
     render() {
         return (
-            <div className="d-flex" id="wrapper">
-                <SideNav></SideNav>
-                {
-                    this.state.loading || !this.state.msg ? (
-                        <div className="parent-loader"><div className="loader"></div></div>
-                    ) : (
-                            <div id="page-content-wrapper">
-                                <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                                    {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                            <span className="navbar-toggler-icon"></span>
-                                        </button> */}
-                                    <div className="das m-auto">Organizations</div>
-                                </nav>
-                                <div className="container">
-                                    <div className="row mt-1">
-                                        <div className="col-12">
-                                            <div className="firm-box">
-                                                <h5 className="heading">All Organizations</h5>
-                                                <a href="/add-organization" className="btn btn-primary primary-btn">Add Organization</a>
 
-                                                {/* <Table data={this.state.orgs}></Table> */}
-                                                <DataTable
-                                                    columns={this.columns}
-                                                    data={this.state.orgs}
-                                                    selectableRows // add for checkbox selection
-                                                    onSelectedRowsChange={this.handleChange}
-                                                    clearSelectedRows={this.state.toggledClearRows}
-                                                    pagination
-                                                    fixedHeader
-                                                    selectableRowsHighlight
-                                                    selectableRowsNoSelectAll
-                                                // onSelectedRowsChange={this.deleteRow}
-                                                // expandableRows
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
+            <div id="page-content-wrapper">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <div className="das m-auto">Organizations</div>
+                </nav>
+                <div className="container">
+                    <div className="row mt-1">
+                        <div className="col-12">
+                            <div className="firm-box">
+                                <h5 className="heading">All Organizations</h5>
+                                <a href="/add-organization" className="btn btn-primary primary-btn">Add Organization</a>
+                                <div>
+                                    {(this.state.delLoad) ? (<span className="info">Please wait...</span>) : (<span></span>)}
+                                    {
+                                        this.state.loading || !this.state.msg ? (
+                                            <div className="parent-loader"><div className="loader"></div></div>
+                                        ) : (
+                                                <div>
+                                                    {/* <Table data={this.state.orgs}></Table> */}
+                                                    <DataTable
+                                                        columns={this.columns}
+                                                        data={this.state.orgs}
+                                                        selectableRows // add for checkbox selection
+                                                        onSelectedRowsChange={this.handleChange}
+                                                        clearSelectedRows={this.state.toggledClearRows}
+                                                        pagination
+                                                        fixedHeader
+                                                        selectableRowsHighlight
+                                                        selectableRowsNoSelectAll
+                                                    // onSelectedRowsChange={this.deleteRow}
+                                                    // expandableRows
+                                                    />
+                                                </div>
+                                            )
+                                    }
+
                                 </div>
                             </div>
-                        )
-                }
-
+                        </div>
+                    </div>
+                </div>
             </div>
+
         )
     }
 }

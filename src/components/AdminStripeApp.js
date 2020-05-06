@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import SideNav from './Sidebar/SideNav';
-
 
 class AdminStripeApp extends Component {
     constructor(props) {
@@ -134,65 +132,62 @@ class AdminStripeApp extends Component {
     render() {
 
         return (
-            <div className="d-flex" id="wrapper">
-                <SideNav></SideNav>
-                <div id="page-content-wrapper">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                        {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <div id="page-content-wrapper">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button> */}
-                        <div className="das m-auto">Subscription</div>
-                    </nav>
-                    <div className="container">
-                        <div className="row mt-1">
-                            <div className="col-12">
-                                <div className="firm-box">
-                                    <div className="container pb-5">
-                                        <div className="row">
-                                            <div className="col-xs-12 col-md-8 mr-auto ml-auto">
-                                                <div className="panel panel-default">
-                                                    <form className="payment_form" onSubmit={this.deleteAddSubscription}>
-                                                        <div className="panel-body mt-3">
-                                                            <h5>Update Subscription Plan</h5>
-                                                            {
-                                                                (this.state.message) ? (
-                                                                    <p className="alert alert-info">{this.state.message}</p>
+                    <div className="das m-auto">Subscription</div>
+                </nav>
+                <div className="container">
+                    <div className="row mt-1">
+                        <div className="col-12">
+                            <div className="firm-box">
+                                <div className="container pb-5">
+                                    <div className="row">
+                                        <div className="col-xs-12 col-md-8 mr-auto ml-auto">
+                                            <div className="panel panel-default">
+                                                <form className="payment_form" onSubmit={this.deleteAddSubscription}>
+                                                    <div className="panel-body mt-3">
+                                                        <h5>Update Subscription Plan</h5>
+                                                        {
+                                                            (this.state.message) ? (
+                                                                <p className="alert alert-info">{this.state.message}</p>
 
-                                                                ) : (
-                                                                        <span className="p-2"></span>
-                                                                    )
-                                                            }
-                                                            <div className="row">
-                                                                <div className="col-xs-12 col-md-12">
-                                                                    <div className="form-group">
-                                                                        <label>Subscription Plan</label>
-                                                                        <div className="input-group">
-                                                                            <select required name="subscriptionPlan" className="form-control" onChange={this.handleChange}>
-                                                                                <option value="">Select Plan</option>
-                                                                                <option value="plan_HCLnmkUphAjOtD">Annual Billing (per employee)</option>
-                                                                                <option value="plan_HCLnsiWIp66uz6">Monthly Billing (per employee)</option>
-                                                                                <option value="plan_HCLmkhrjwUcgfV">Annual Billing (fixed)</option>
-                                                                                <option value="plan_HBDEzsHuEhN6NI">Monthly Billing (fixed)</option>
-                                                                            </select>
-                                                                        </div>
+                                                            ) : (
+                                                                    <span className="p-2"></span>
+                                                                )
+                                                        }
+                                                        <div className="row">
+                                                            <div className="col-xs-12 col-md-12">
+                                                                <div className="form-group">
+                                                                    <label>Subscription Plan</label>
+                                                                    <div className="input-group">
+                                                                        <select required name="subscriptionPlan" className="form-control" onChange={this.handleChange}>
+                                                                            <option value="">Select Plan</option>
+                                                                            <option value="plan_HCLnmkUphAjOtD">Annual Billing (per employee)</option>
+                                                                            <option value="plan_HCLnsiWIp66uz6">Monthly Billing (per employee)</option>
+                                                                            <option value="plan_HCLmkhrjwUcgfV">Annual Billing (fixed)</option>
+                                                                            <option value="plan_HBDEzsHuEhN6NI">Monthly Billing (fixed)</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                         </div>
-                                                        <div className="panel-footer">
-                                                            <div className="row">
-                                                                <div className="col-xs-12 col-md-12">
-                                                                    {(this.state.formProcess) ? (
-                                                                        <button className="btn btn-default btn-block" disabled>Please wait...</button>
-                                                                    ) : (
-                                                                            <button className="btn btn-default btn-block">Update plan</button>
-                                                                        )}
-                                                                </div>
+
+                                                    </div>
+                                                    <div className="panel-footer">
+                                                        <div className="row">
+                                                            <div className="col-xs-12 col-md-12">
+                                                                {(this.state.formProcess) ? (
+                                                                    <button className="btn btn-default btn-block" disabled>Please wait...</button>
+                                                                ) : (
+                                                                        <button className="btn btn-default btn-block">Update plan</button>
+                                                                    )}
                                                             </div>
                                                         </div>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

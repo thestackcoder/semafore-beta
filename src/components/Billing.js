@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import SideNav from './Sidebar/SideNav';
 import "../stylesheets/togglecheck.css";
 import axios from 'axios';
 import { Link } from 'wouter';
@@ -130,43 +129,47 @@ class Billing extends Component {
 
     render() {
         return (
-            <div className="d-flex" id="wrapper">
-                <SideNav></SideNav>
-                {
-                    this.state.loading || !this.state.msg ? (
-                        <div className="parent-loader"><div className="loader"></div></div>
-                    ) : (
-                            <div id="page-content-wrapper">
-                                <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                                    {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+            <div id="page-content-wrapper">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button> */}
-                                    <div className="das m-auto">Billing</div>
-                                </nav>
-                                <div className="container">
-                                    <div className="row mt-1">
-                                        <div className="col-12">
-                                            <div className="firm-box">
-                                                <h5>Billing Details</h5>
-                                                {/* <Table data={this.dataSet}></Table> */}
-                                                <DataTable
-                                                    columns={this.columns}
-                                                    data={this.state.orgs}
-                                                    pagination
-                                                    fixedHeader
-                                                    selectableRowsHighlight
-                                                    selectableRowsNoSelectAll
-                                                // onSelectedRowsChange={this.deleteRow}
-                                                // expandableRows
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div className="das m-auto">Billing</div>
+                </nav>
+                <div className="container">
+                    <div className="row mt-1">
+                        <div className="col-12">
+                            <div className="firm-box">
+                                <h5>Billing Details</h5>
+                                <div>
+                                    {
+                                        this.state.loading || !this.state.msg ? (
+                                            <div className="parent-loader"><div className="loader"></div></div>
+                                        ) : (
+                                                <div>
+                                                    {/* <Table data={this.dataSet}></Table> */}
+                                                    <DataTable
+                                                        columns={this.columns}
+                                                        data={this.state.orgs}
+                                                        pagination
+                                                        fixedHeader
+                                                        selectableRowsHighlight
+                                                        selectableRowsNoSelectAll
+                                                    // onSelectedRowsChange={this.deleteRow}
+                                                    // expandableRows
+                                                    />
+
+                                                </div>
+                                            )
+                                    }
                                 </div>
                             </div>
-                        )
-                }
+                        </div>
+                    </div>
+                </div>
             </div>
+
         )
     }
 }

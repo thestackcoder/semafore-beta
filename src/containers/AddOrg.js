@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import SideNav from '../components/Sidebar/SideNav';
 import axios from 'axios';
 
 class AddOrg extends Component {
@@ -74,62 +73,59 @@ class AddOrg extends Component {
         }
 
         return (
-            <div className="d-flex" id="wrapper">
-                <SideNav></SideNav>
-                <div id="page-content-wrapper">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                        {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <div id="page-content-wrapper">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                             <span className="navbar-toggler-icon"></span>
                                         </button> */}
-                        <div className="das m-auto">Add New Organization</div>
-                    </nav>
-                    <div className="container">
-                        <div className="row mt-1">
-                            <div className="col-12">
-                                <div className="firm-box">
-                                    {this.state.empty_field ? alert2 : <span></span>}
-                                    {alert}
-                                    <div className="col-md-8 col-sm-12 offset-md-2">
-                                        <form className="settings_form" onSubmit={this.handleSubmit}>
-                                            <div className="form-group">
-                                                <label>Name:</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="fname"
-                                                    required
-                                                    value={this.state.name}
-                                                    onChange={event => this.setState({ name: event.target.value })}
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Email:</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="email"
-                                                    required
-                                                    value={this.state.email}
-                                                    onChange={event => this.setState({ email: event.target.value })}
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Password:</label>
-                                                <input
-                                                    type="password"
-                                                    className="form-control"
-                                                    id="password"
-                                                    required
-                                                    value={this.state.password}
-                                                    onChange={event => this.setState({ password: event.target.value })}
-                                                />
-                                            </div>
+                    <div className="das m-auto">Add New Organization</div>
+                </nav>
+                <div className="container">
+                    <div className="row mt-1">
+                        <div className="col-12">
+                            <div className="firm-box">
+                                {this.state.empty_field ? alert2 : <span></span>}
+                                {alert}
+                                <div className="col-md-8 col-sm-12 offset-md-2">
+                                    <form className="settings_form" onSubmit={this.handleSubmit}>
+                                        <div className="form-group">
+                                            <label>Name:</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="fname"
+                                                required
+                                                value={this.state.name}
+                                                onChange={event => this.setState({ name: event.target.value })}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Email:</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="email"
+                                                required
+                                                value={this.state.email}
+                                                onChange={event => this.setState({ email: event.target.value })}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Password:</label>
+                                            <input
+                                                type="password"
+                                                className="form-control"
+                                                id="password"
+                                                required
+                                                value={this.state.password}
+                                                onChange={event => this.setState({ password: event.target.value })}
+                                            />
+                                        </div>
 
-                                            <button className="mt-4 mb-2 btn btn-block btn-default" onClick={this.handleSubmit}>
-                                                {this.state.isLoading ? <div className="btn-loader"></div> : "Add"}
-                                            </button>
-                                        </form>
-                                    </div>
+                                        <button className="mt-4 mb-2 btn btn-block btn-default" onClick={this.handleSubmit}>
+                                            {this.state.isLoading ? <div className="btn-loader"></div> : "Add"}
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
