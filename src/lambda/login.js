@@ -16,13 +16,13 @@ import Organization from './models/organizationModel';
 
 //Creating a cookie
 
-function createJwtCookie(userId, email, role) {
+function createJwtCookie(userId, email, role, name) {
   const secretKey =
     "-----BEGIN RSA PRIVATE KEY-----\n" +
     process.env.JWT_SECRET_KEY +
     "\n-----END RSA PRIVATE KEY-----";
 
-  const token = jwt.sign({ userId, email, role }, secretKey, {
+  const token = jwt.sign({ userId, email, role, name }, secretKey, {
     algorithm: "RS256",
     expiresIn: "100 days",
   });
@@ -51,9 +51,11 @@ exports.handler = async (event, context) => {
     }
 
     let role = '';
+    let name = '';
 
     if (existingUser) {
       role = existingUser.role;
+      name = existingUser.name;
 
       const matches = await bcrypt.compare(password, existingUser.password)
       if (!matches) {
@@ -62,6 +64,7 @@ exports.handler = async (event, context) => {
       }
     } else if (existingOrg) {
       role = existingOrg.role;
+      name = existingOrg.name;
 
       const matches_org = await bcrypt.compare(password, existingOrg.password)
       if (!matches_org) {
@@ -80,7 +83,7 @@ exports.handler = async (event, context) => {
     } else {
     }
 
-    const jwtCookie = createJwtCookie(userId, email, role);
+    const jwtCookie = createJwtCookie(userId, email, role, name);
 
     return {
       statusCode: 200,
@@ -88,7 +91,7 @@ exports.handler = async (event, context) => {
         "Set-Cookie": jwtCookie,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: userId, email, role, msg: "Successfullly logged in!" }),
+      body: JSON.stringify({ id: userId, email, name, role, msg: "Successfullly logged in!" }),
     }
 
   } catch (err) {

@@ -1,75 +1,151 @@
 import React, { Component } from 'react'
 import avatar from "../images/avatar.png";
-import SideNav from './ClientSidebar/SideNav';
+import axios from 'axios';
 
+class OSettings extends Component {
 
-class Settings extends Component {
-
-    state = {
-        first_name: "John",
-        last_name: "Doe",
-        current_password: "12345678",
-        new_password: "87654321",
-        confirm_password: "87654321",
+    constructor(props) {
+        super(props)
+        this.state = {
+            isLoading: false,
+            id: "",
+            email: "",
+            name: "",
+            new_password: "",
+            old_password: "",
+            confirm_password: "",
+            message: false,
+            message_text: '',
+            empty_field: false
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount() {
+        const email = this.props.email;
+        const name = this.props.name;
+        const id = this.props.id;
+
+        this.setState({ id: id, email: email, name: name });
+    }
+
+    handleChange(event) {
+        this.setState({ name: event.target.value, email: event.target.value });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        if (this.state.email == "" || this.state.password == "") {
+            this.setState({ empty_field: true });
+            return;
+        } else {
+            this.setState({ empty_field: false });
+        }
+        this.setState({ isLoading: true }, () => {
+            axios({
+                method: 'put',
+                url: '/.netlify/functions/updateOrgProfile',
+                headers: {
+                    'Accept': "application/json",
+                },
+                data: {
+                    "id": this.state.id,
+                    "email": this.state.email,
+                    "name": this.state.name,
+                    "password": this.state.new_password,
+                    "old_password": this.state.old_password,
+                }
+            })
+                .then((data) => {
+                    // setUserSession(response.data.token, response.data.user);
+                    console.log(data);
+                    this.setState({ isLoading: false, message: true, message_text: data.data.msg });
+                })
+                .catch(error => {
+                    this.setState({ message: true, message_text: error.response.data.msg, isLoading: false });
+                });
+        });
+
+    }
+
+
     render() {
+        let alert;
+        if (this.state.message === false) {
+            alert = '';
+        } else {
+            alert = <div className="alert alert-info" role="alert">{this.state.message_text}</div>;
+        }
+
+        let alert2;
+        if (this.state.empty_field === false) {
+            alert2 = '';
+        } else {
+            alert2 = <div className="alert alert-warning" role="alert">Please fill out the fields first.</div>;
+        }
+
         return (
-            <div className="d-flex" id="wrapper">
-                <SideNav></SideNav>
-                <div id="page-content-wrapper">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                        {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <div id="page-content-wrapper">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button> */}
-                        <div className="das m-auto">Settings</div>
-                    </nav>
-                    <div className="container">
-                        <div className="row mt-4">
-                            <div className="col-10 offset-1">
-                                <div className="firm-box">
-                                    <div className="col-8 offset-md-2">
-                                        <form className="settings_form">
-                                            <div class="form-group text-center">
-                                                <img src={avatar} alt="user-profile-pic" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="fname">First Name:</label>
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    id="fname"
-                                                    value={this.state.first_name}
-                                                    onChange={event => this.setState({ first_name: event.target.value })}
-                                                />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="lname">Last Name:</label>
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    id="lname"
-                                                    value={this.state.last_name}
-                                                    onChange={event => this.setState({ last_name: event.target.value })}
-                                                />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="pwd">Current Password:</label>
-                                                <input type="text" class="form-control" id="pwd_1" value={this.state.current_password} />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="pwd">New Password:</label>
-                                                <input type="password" class="form-control" id="pwd_2" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="pwd">Confirm New Password:</label>
-                                                <input type="password" class="form-control" id="pwd_3" />
-                                            </div>
-                                            <div class="form-group text-center">
-                                                <button type="submit" class="btn btn-default">Save</button>
-                                            </div>
-                                        </form>
-                                    </div>
+                    <div className="das m-auto">Settings</div>
+                </nav>
+                <div className="container">
+                    <div className="row mt-1">
+                        <div className="col-10 offset-1">
+                            <div className="firm-box">
+                                {this.state.empty_field ? alert2 : <span></span>}
+                                {alert}
+                                <div className="col-8 offset-md-2">
+                                    <form className="settings_form">
+                                        <div className="form-group text-center">
+                                            <img src={avatar} alt="user-profile-pic" />
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label>Name:</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="name"
+                                                value={this.state.name}
+                                                onChange={event => this.setState({ name: event.target.value })}
+                                            />
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label>Email:</label>
+                                            <input
+                                                type="email"
+                                                className="form-control"
+                                                id="fname"
+                                                value={this.state.email}
+                                                onChange={event => this.setState({ email: event.target.value })}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Current Password:</label>
+                                            <input type="text" className="form-control" id="pwd_1" onChange={event => this.setState({ old_password: event.target.value })} />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>New Password:</label>
+                                            <input type="text" className="form-control" id="pwd_2" onChange={event => this.setState({ new_password: event.target.value })} />
+                                        </div>
+                                        {/* <div className="form-group">
+                                                <label>Confirm New Password:</label>
+                                                <input type="password" className="form-control" id="pwd_3" />
+                                            </div> */}
+                                        <div className="form-group text-center">
+
+                                            {(this.state.isLoading) ? (
+                                                <button className="btn btn-default" disabled>Please wait...</button>
+                                            ) : (
+                                                    <button onClick={this.handleSubmit} type="submit" className="btn btn-default">Update</button>
+                                                )}
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -80,4 +156,4 @@ class Settings extends Component {
     }
 }
 
-export default Settings;
+export default OSettings;

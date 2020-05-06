@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import SideNav from './ClientSidebar/SideNav';
 import { Link } from 'wouter';
 import DataTable from 'react-data-table-component';
 
@@ -68,39 +67,35 @@ class Employees extends Component {
 
     render() {
         return (
-            <div className="d-flex" id="wrapper">
-                <SideNav></SideNav>
-                <div id="page-content-wrapper">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                        {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <div id="page-content-wrapper">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button> */}
-                        <div className="das m-auto">Employees</div>
-                    </nav>
-                    <div className="container">
-                        <div className="row mt-2">
-                            <div className="col-12">
-                                <div className="mb-3">
-                                    <button className="btn btn-default">Add New</button>
-                                    <button className="btn btn-default float-right">Import CSV</button>
-                                </div>
-                                <div className="firm-box">
-                                    <h5>All Employees</h5>
-                                    {/* <Etable data={this.dataSet}></Etable>*/}
-                                    <DataTable
-                                        columns={this.columns}
-                                        selectableRows // add for checkbox selection
-                                        data={this.state.orgs}
-                                        onSelectedRowsChange={this.handleChange}
-                                        clearSelectedRows={this.state.toggledClearRows}
-                                        pagination
-                                        fixedHeader
-                                        selectableRowsHighlight
-                                        selectableRowsNoSelectAll
-                                    // onSelectedRowsChange={this.deleteRow}
-                                    // expandableRows
-                                    />
-                                </div>
+                    <div className="das m-auto">Employees</div>
+                </nav>
+                <div className="container">
+                    <div className="row mt-2">
+                        <div className="col-12">
+                            <div className="mb-3">
+                                <button className="btn btn-default">Add New</button>
+                                <button className="btn btn-default float-right">Import CSV</button>
+                            </div>
+                            <div className="firm-box">
+                                <h5>All Employees</h5>
+                                <DataTable
+                                    columns={this.columns}
+                                    selectableRows // add for checkbox selection
+                                    data={this.state.orgs}
+                                    onSelectedRowsChange={this.handleChange}
+                                    clearSelectedRows={this.state.toggledClearRows}
+                                    pagination
+                                    fixedHeader
+                                    selectableRowsHighlight
+                                    selectableRowsNoSelectAll
+                                // onSelectedRowsChange={this.deleteRow}
+                                // expandableRows
+                                />
                             </div>
                         </div>
                     </div>

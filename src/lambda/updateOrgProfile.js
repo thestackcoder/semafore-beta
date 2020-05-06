@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import db from './server'
 import bcrypt from 'bcryptjs';
-import User from './models/userModel'
+import Org from './models/organizationModel'
 
 exports.handler = async (event, context) => {
     context.callbackWaitsForEmptyEventLoop = false;
@@ -18,32 +18,35 @@ exports.handler = async (event, context) => {
         const data = JSON.parse(event.body),
             id = data.id,
             email = data.email,
+            name = data.name,
             oldPwd = data.old_password,
             pwd = data.password;
 
-        const user = await User.findById(id);
-
-        const matches = await bcrypt.compare(oldPwd, user.password);
+        const org = await Org.findById(id);
         let response = {};
 
+        if (oldPwd) {
+            const matches = await bcrypt.compare(oldPwd, org.password);
 
-        if (!matches) {
-            errorStatusCode = 404
-            throw new Error(`Invalid current password`)
+            if (!matches) {
+                errorStatusCode = 404
+                throw new Error(`Invalid current password`)
+            }
         }
 
         const passwordHash = await bcrypt.hash(pwd, 10);
 
         const obj = {
             email: email,
+            name: name,
             password: passwordHash
         }
 
         response = {
-            msg: user.email + " successfully updated",
+            msg: org.email + " successfully updated",
             email: email
         }
-        await User.findOneAndUpdate({ _id: id }, obj);
+        await Org.findOneAndUpdate({ _id: id }, obj);
 
 
         return {
@@ -52,7 +55,7 @@ exports.handler = async (event, context) => {
             body: JSON.stringify(response)
         }
     } catch (err) {
-        console.log('User.update', err) // output to netlify function log
+        console.log('Org.update', err) // output to netlify function log
         return {
             statusCode: errorStatusCode,
             body: JSON.stringify({ msg: err.message })

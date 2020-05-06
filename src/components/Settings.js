@@ -11,6 +11,7 @@ class Settings extends Component {
             id: "",
             email: "",
             new_password: "",
+            old_password: "",
             confirm_password: "",
             message: false,
             message_text: '',
@@ -49,6 +50,7 @@ class Settings extends Component {
                     "id": this.state.id,
                     "email": this.state.email,
                     "password": this.state.new_password,
+                    "old_password": this.state.old_password,
                 }
             })
                 .then((data) => {
@@ -57,8 +59,7 @@ class Settings extends Component {
                     this.setState({ isLoading: false, message: true, message_text: data.data.msg });
                 })
                 .catch(error => {
-                    console.log(error);
-                    this.setState({ isLoading: false, message: false });
+                    this.setState({ message: true, message_text: error.response.data.msg, isLoading: false });
                 });
         });
 
@@ -70,7 +71,7 @@ class Settings extends Component {
         if (this.state.message === false) {
             alert = '';
         } else {
-            alert = <div className="alert alert-success" role="alert">{this.state.message_text}</div>;
+            alert = <div className="alert alert-info" role="alert">{this.state.message_text}</div>;
         }
 
         let alert2;
@@ -99,6 +100,7 @@ class Settings extends Component {
                                         <div className="form-group text-center">
                                             <img src={avatar} alt="user-profile-pic" />
                                         </div>
+
                                         <div className="form-group">
                                             <label>Email:</label>
                                             <input
@@ -109,22 +111,20 @@ class Settings extends Component {
                                                 onChange={event => this.setState({ email: event.target.value })}
                                             />
                                         </div>
-                                        {/* <div className="form-group">
-                                                <label>Current Password:</label>
-                                                <input type="text" className="form-control" id="pwd_1" value={this.state.current_password} />
-                                            </div> */}
+                                        <div className="form-group">
+                                            <label>Current Password:</label>
+                                            <input type="text" className="form-control" id="pwd_1" onChange={event => this.setState({ old_password: event.target.value })} />
+                                        </div>
                                         <div className="form-group">
                                             <label>New Password:</label>
-                                            <input type="text" className="form-control" id="pwd_2" />
+                                            <input type="text" className="form-control" id="pwd_2" onChange={event => this.setState({ new_password: event.target.value })} />
                                         </div>
                                         {/* <div className="form-group">
                                                 <label>Confirm New Password:</label>
                                                 <input type="password" className="form-control" id="pwd_3" />
                                             </div> */}
                                         <div className="form-group text-center">
-                                            {/* <button onClick={this.handleSubmit} type="submit" className="btn btn-default">
-                                                {this.state.isLoading ? <div className="btn-loader"></div> : "Update"}
-                                            </button> */}
+
                                             {(this.state.isLoading) ? (
                                                 <button className="btn btn-default" disabled>Please wait...</button>
                                             ) : (
