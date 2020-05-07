@@ -17,7 +17,8 @@ class Settings extends Component {
             message: false,
             message_text: '',
             empty_field: false,
-            please_wait: false
+            please_wait: false,
+            empty_old: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -54,8 +55,11 @@ class Settings extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        if (this.state.email === "" || this.state.old_password === "" || this.state.new_password === "") {
+        if (this.state.email === "" || this.state.name === "") {
             this.setState({ empty_field: true });
+            return;
+        } else if (this.state.new_password !== "" && this.state.old_password === "") {
+            this.setState({ empty_old: true });
             return;
         } else {
             this.setState({ empty_field: false });
@@ -108,6 +112,14 @@ class Settings extends Component {
             alert2 = <div className="alert alert-warning" role="alert">Please fill out the fields first.</div>;
         }
 
+        let alert3;
+        if (this.state.empty_old === false) {
+            alert3 = '';
+        } else {
+            alert3 = <div className="alert alert-warning" role="alert">Please enter old password.</div>;
+        }
+
+
         return (
             <div id="page-content-wrapper">
                 <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
@@ -120,6 +132,7 @@ class Settings extends Component {
                     <div className="row mt-1">
                         <div className="col-10 offset-1">
                             <div className="firm-box">
+                                {this.state.empty_old ? alert3 : <span></span>}
                                 {this.state.empty_field ? alert2 : <span></span>}
                                 {alert}
                                 <div className="col-8 offset-md-2">

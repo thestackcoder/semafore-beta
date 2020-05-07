@@ -48,7 +48,7 @@ class Employees extends Component {
             cell: row => <div>
                 <Link className="btn btn-success btn-sm">Edit</Link>
                     &nbsp; &nbsp;
-                <button className="btn btn-danger btn-sm">Delete</button>
+                <button className="btn btn-danger btn-danger-main btn-sm">Delete</button>
 
             </div>,
         }

@@ -32,22 +32,34 @@ exports.handler = async (event, context) => {
                 errorStatusCode = 404
                 throw new Error(`Invalid current password`)
             }
+
+            const passwordHash = await bcrypt.hash(pwd, 10);
+
+            const obj = {
+                email: email,
+                name: name,
+                password: passwordHash
+            }
+
+            response = {
+                msg: org.email + " successfully updated",
+                email: email
+            }
+            await Org.findOneAndUpdate({ _id: id }, obj);
+
+        } else {
+            const obj = {
+                email: email,
+                name: name,
+            }
+
+            response = {
+                msg: org.email + " successfully updated",
+                email: email,
+                name: name
+            }
+            await Org.findOneAndUpdate({ _id: id }, obj);
         }
-
-        const passwordHash = await bcrypt.hash(pwd, 10);
-
-        const obj = {
-            email: email,
-            name: name,
-            password: passwordHash
-        }
-
-        response = {
-            msg: org.email + " successfully updated",
-            email: email
-        }
-        await Org.findOneAndUpdate({ _id: id }, obj);
-
 
         return {
             statusCode: 201,
