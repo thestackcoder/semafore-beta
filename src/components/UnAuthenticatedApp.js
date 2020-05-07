@@ -16,10 +16,7 @@ function UnAuthenticatedApp() {
                     <Redirect to="login" />
                 </Route>
                 <Route path="/organizational-billing/:id">
-                    <Redirect to="login" />
-                </Route>
-                <Route path="/organizational-billing/login">
-                    <Redirect to="login" />
+                    <Login />
                 </Route>
                 <Route path="/organization">
                     <Redirect to="login" />
@@ -30,8 +27,11 @@ function UnAuthenticatedApp() {
                 {/* <Route path="/update-organization/:params">
                     <Redirect to="login" />
                 </Route> */}
-                <Route path="/settings/:email,:id">
-                    <Redirect to="login" />
+                <Route path="/settings/:id">
+                    <Login />
+                </Route>
+                <Route path="/update-organization/:id,:name,:email">
+                    <Login />
                 </Route>
                 <Route path="/billing">
                     <Redirect to="login" />
@@ -45,8 +45,8 @@ function UnAuthenticatedApp() {
                 <Route path="/organizational-billing">
                     <Redirect to="login" />
                 </Route>
-                <Route path="/organizational-settings">
-                    <Redirect to="login" />
+                <Route path="/organizational-settings/:id">
+                    <Login />
                 </Route>
                 <Route path="/screenshots">
                     <Redirect to="login" />
@@ -62,6 +62,7 @@ function UnAuthenticatedApp() {
                         <Link to="/login">Go to Login Page</Link>
                     </div>
                 </Route>
+
             </Switch>
 
             <Footer></Footer>

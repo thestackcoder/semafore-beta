@@ -31,8 +31,8 @@ function AuthenticatedApp() {
                     <Route path="/payment/:id">
                         {params => <AdminStripeApp id={params.id} />}
                     </Route>
-                    <Route path="/settings/:email,:id">
-                        {params => <Settings email={params.email} id={params.id} />}
+                    <Route path="/settings/:id">
+                        {params => <Settings id={params.id} />}
                     </Route>
                     <Route path="/login">
                         <Redirect to="/" />

@@ -10,7 +10,7 @@ function App() {
   const { user } = useAuth();
   // const { org } = useOrgAuth();
   if (user) {
-    if (user.role == 'super_admin') {
+    if (user.role === 'super_admin') {
       return <AuthenticatedApp />;
     } else {
       return <AuthOrgApp />;

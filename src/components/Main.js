@@ -3,7 +3,6 @@ import "../stylesheets/Sidebar.css";
 import chat from "../images/chat.png";
 import group from "../images/green-group.png";
 import bar_chart from "../images/bar_chart.png";
-import SideNav from './Sidebar/SideNav';
 import axios from 'axios';
 
 const Main = () => {

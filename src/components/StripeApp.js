@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import SideNav from './ClientSidebar/SideNav';
 
 
 class StripeApp extends Component {
@@ -187,119 +186,116 @@ class StripeApp extends Component {
     render() {
 
         return (
-            <div className="d-flex" id="wrapper">
-                <SideNav></SideNav>
-                <div id="page-content-wrapper">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                        {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <div id="page-content-wrapper">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button> */}
-                        <div className="das m-auto">Subscription</div>
-                    </nav>
-                    <div className="container">
-                        <div className="row mt-1">
-                            <div className="col-12">
-                                <div className="firm-box">
-                                    <div className="container pb-5">
-                                        <div className="row">
-                                            <div className="col-xs-12 col-md-8 mr-auto ml-auto">
-                                                <div className="panel panel-default">
-                                                    <form className="payment_form" onSubmit={this.pay}>
-                                                        <div className="panel-body mt-3">
-                                                            <h5>Payment Details</h5>
-                                                            {
-                                                                (this.state.message) ? (
-                                                                    <p className="alert alert-info">{this.state.message}</p>
+                    <div className="das m-auto">Subscription</div>
+                </nav>
+                <div className="container">
+                    <div className="row mt-1">
+                        <div className="col-12">
+                            <div className="firm-box">
+                                <div className="container pb-5">
+                                    <div className="row">
+                                        <div className="col-xs-12 col-md-8 mr-auto ml-auto">
+                                            <div className="panel panel-default">
+                                                <form className="payment_form" onSubmit={this.pay}>
+                                                    <div className="panel-body mt-3">
+                                                        <h5>Payment Details</h5>
+                                                        {
+                                                            (this.state.message) ? (
+                                                                <p className="alert alert-info">{this.state.message}</p>
 
+                                                            ) : (
+                                                                    <span className="p-2"></span>
+                                                                )
+                                                        }
+                                                        <div className="row">
+                                                            <div className="col-xs-6 col-md-6">
+                                                                <div className="form-group">
+                                                                    <label>Card Number</label>
+                                                                    <div className="input-group">
+                                                                        <input required type="text" className="form-control" placeholder="Valid Card Number" name="cardNumber" maxLength="18" onChange={this.handleChange} />
+                                                                        <span className="input-group-addon"><span className="fa fa-credit-card"></span></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-xs-6 col-md-6">
+                                                                <div className="form-group">
+                                                                    <label>Subscription Plan</label>
+                                                                    <div className="input-group">
+                                                                        <select required name="subscriptionPlan" className="form-control" onChange={this.handleChange}>
+                                                                            <option value="">Select Plan</option>
+                                                                            <option value="plan_HCLnmkUphAjOtD">Annual Billing (per employee)</option>
+                                                                            <option value="plan_HCLnsiWIp66uz6">Monthly Billing (per employee)</option>
+                                                                            <option value="plan_HCLmkhrjwUcgfV">Annual Billing (fixed)</option>
+                                                                            <option value="plan_HBDEzsHuEhN6NI">Monthly Billing (fixed)</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row">
+                                                            <div className="col-xs-7 col-md-7">
+                                                                <div className="form-group">
+                                                                    <label><span className="hidden-xs">Expiration</span> Date</label>
+                                                                    <div className="row">
+                                                                        <div className="col-md-6">
+                                                                            <div className="form-group">
+                                                                                <select required name="expMonth" className="form-control" onChange={this.handleChange}>
+                                                                                    <option value="">Select Month</option>
+                                                                                    <option value="1">01</option>
+                                                                                    <option value="2">02</option>
+                                                                                    <option value="3">03</option>
+                                                                                    <option value="4">04</option>
+                                                                                    <option value="5">05</option>
+                                                                                    <option value="6">06</option>
+                                                                                    <option value="7">07</option>
+                                                                                    <option value="8">08</option>
+                                                                                    <option value="9">09</option>
+                                                                                    <option value="10">10</option>
+                                                                                    <option value="11">11</option>
+                                                                                    <option value="12">12</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="col-md-6 pull-right">
+                                                                            <div className="form-group">
+                                                                                <select required name="expYear" className="form-control" onChange={this.handleChange}>
+                                                                                    <option value="">Select Year</option>
+                                                                                    {
+                                                                                        this.years.map((year, index) => {
+                                                                                            return <option key={`year${index}`} value={year}>{year}</option>
+                                                                                        })
+                                                                                    }
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-xs-5 col-md-5 pull-right">
+                                                                <div className="form-group">
+                                                                    <label>CVV Code</label>
+                                                                    <input type="text" name="cvv" className="form-control" placeholder="CVC" maxLength="4" onChange={this.handleChange} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="panel-footer">
+                                                        <div className="row">
+                                                            <div className="col-xs-12 col-md-12">
+                                                                {(this.state.formProcess) ? (
+                                                                    <button className="btn btn-default btn-block" disabled>Please wait...</button>
                                                                 ) : (
-                                                                        <span className="p-2"></span>
-                                                                    )
-                                                            }
-                                                            <div className="row">
-                                                                <div className="col-xs-6 col-md-6">
-                                                                    <div className="form-group">
-                                                                        <label>Card Number</label>
-                                                                        <div className="input-group">
-                                                                            <input required type="text" className="form-control" placeholder="Valid Card Number" name="cardNumber" maxLength="18" onChange={this.handleChange} />
-                                                                            <span className="input-group-addon"><span className="fa fa-credit-card"></span></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-xs-6 col-md-6">
-                                                                    <div className="form-group">
-                                                                        <label>Subscription Plan</label>
-                                                                        <div className="input-group">
-                                                                            <select required name="subscriptionPlan" className="form-control" onChange={this.handleChange}>
-                                                                                <option value="">Select Plan</option>
-                                                                                <option value="plan_HCLnmkUphAjOtD">Annual Billing (per employee)</option>
-                                                                                <option value="plan_HCLnsiWIp66uz6">Monthly Billing (per employee)</option>
-                                                                                <option value="plan_HCLmkhrjwUcgfV">Annual Billing (fixed)</option>
-                                                                                <option value="plan_HBDEzsHuEhN6NI">Monthly Billing (fixed)</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="row">
-                                                                <div className="col-xs-7 col-md-7">
-                                                                    <div className="form-group">
-                                                                        <label><span className="hidden-xs">Expiration</span> Date</label>
-                                                                        <div className="row">
-                                                                            <div className="col-md-6">
-                                                                                <div className="form-group">
-                                                                                    <select required name="expMonth" className="form-control" onChange={this.handleChange}>
-                                                                                        <option value="">Select Month</option>
-                                                                                        <option value="1">01</option>
-                                                                                        <option value="2">02</option>
-                                                                                        <option value="3">03</option>
-                                                                                        <option value="4">04</option>
-                                                                                        <option value="5">05</option>
-                                                                                        <option value="6">06</option>
-                                                                                        <option value="7">07</option>
-                                                                                        <option value="8">08</option>
-                                                                                        <option value="9">09</option>
-                                                                                        <option value="10">10</option>
-                                                                                        <option value="11">11</option>
-                                                                                        <option value="12">12</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="col-md-6 pull-right">
-                                                                                <div className="form-group">
-                                                                                    <select required name="expYear" className="form-control" onChange={this.handleChange}>
-                                                                                        <option value="">Select Year</option>
-                                                                                        {
-                                                                                            this.years.map((year, index) => {
-                                                                                                return <option key={`year${index}`} value={year}>{year}</option>
-                                                                                            })
-                                                                                        }
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-xs-5 col-md-5 pull-right">
-                                                                    <div className="form-group">
-                                                                        <label>CVV Code</label>
-                                                                        <input type="text" name="cvv" className="form-control" placeholder="CVC" maxLength="4" onChange={this.handleChange} />
-                                                                    </div>
-                                                                </div>
+                                                                        <button className="btn btn-default btn-block">Process payment</button>
+                                                                    )}
                                                             </div>
                                                         </div>
-                                                        <div className="panel-footer">
-                                                            <div className="row">
-                                                                <div className="col-xs-12 col-md-12">
-                                                                    {(this.state.formProcess) ? (
-                                                                        <button className="btn btn-default btn-block" disabled>Please wait...</button>
-                                                                    ) : (
-                                                                            <button className="btn btn-default btn-block">Process payment</button>
-                                                                        )}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

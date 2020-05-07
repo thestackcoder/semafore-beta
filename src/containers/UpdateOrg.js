@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import SideNav from '../components/Sidebar/SideNav';
 import axios from 'axios';
 
 class UpdateOrg extends Component {
@@ -20,10 +19,11 @@ class UpdateOrg extends Component {
 
     componentDidMount() {
         const name = this.props.name;
+        const urlEncodedName = decodeURI(name);
         const email = this.props.email;
         const id = this.props.id;
 
-        this.setState({ id: id, name: name, email: email });
+        this.setState({ id: id, name: urlEncodedName, email: email });
     }
 
     handleChange(event) {
@@ -32,12 +32,12 @@ class UpdateOrg extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        // if (this.state.name == "" || this.state.transaction_id == "") {
-        //     this.setState({ empty_field: true });
-        //     return;
-        // } else {
-        //     this.setState({ empty_field: false });
-        // }
+        if (this.state.name === "" || this.state.email === "") {
+            this.setState({ empty_field: true });
+            return;
+        } else {
+            this.setState({ empty_field: false });
+        }
 
         this.setState({ isLoading: true }, () => {
             axios({
@@ -77,55 +77,47 @@ class UpdateOrg extends Component {
         if (this.state.empty_field === false) {
             alert2 = '';
         } else {
-            alert2 = <div className="alert alert-warning" role="alert">Please fill out the fields first.</div>;
+            alert2 = <div className="alert alert-info" role="alert">Name and email both are required.</div>;
         }
 
         return (
-            <div className="d-flex" id="wrapper">
-                <SideNav></SideNav>
-                <div id="page-content-wrapper">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                        {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                            <span className="navbar-toggler-icon"></span>
-                                        </button> */}
-                        <div className="das m-auto">Edit Organization</div>
-                    </nav>
-                    <div className="container">
-                        <div className="row mt-1">
-                            <div className="col-12">
-                                <div className="firm-box">
+            <div id="page-content-wrapper">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <div className="das m-auto">Edit Organization</div>
+                </nav>
+                <div className="container">
+                    <div className="row mt-1">
+                        <div className="col-12">
+                            <div className="firm-box">
+                                <div className="col-md-8 col-sm-12 offset-md-2">
                                     {this.state.empty_field ? alert2 : <span></span>}
                                     {alert}
-                                    <div className="col-md-8 col-sm-12 offset-md-2">
-                                        <form className="settings_form" onSubmit={this.handleSubmit}>
-                                            <div className="form-group">
-                                                <label>Name:</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="fname"
-                                                    required
-                                                    value={this.state.name}
-                                                    onChange={event => this.setState({ name: event.target.value })}
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Email:</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="email"
-                                                    required
-                                                    value={this.state.email}
-                                                    onChange={event => this.setState({ email: event.target.value })}
-                                                />
-                                            </div>
+                                    <form className="settings_form" onSubmit={this.handleSubmit}>
+                                        <div className="form-group">
+                                            <label>Name:</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="fname"
+                                                value={this.state.name}
+                                                onChange={event => this.setState({ name: event.target.value })}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Email:</label>
+                                            <input
+                                                type="email"
+                                                className="form-control"
+                                                id="email"
+                                                value={this.state.email}
+                                                onChange={event => this.setState({ email: event.target.value })}
+                                            />
+                                        </div>
 
-                                            <button className="mt-4 mb-2 btn btn-block btn-default" onClick={this.handleSubmit}>
-                                                {this.state.isLoading ? <div className="btn-loader"></div> : "Update"}
-                                            </button>
-                                        </form>
-                                    </div>
+                                        <button className="mt-4 mb-2 btn btn-block btn-default" type="submit">
+                                            {this.state.isLoading ? <div className="btn-loader"></div> : "Update"}
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

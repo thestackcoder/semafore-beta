@@ -5,7 +5,6 @@ import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import { Link } from 'wouter';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import { set } from 'mongoose';
 
 
 class Organization extends Component {
@@ -44,9 +43,14 @@ class Organization extends Component {
         },
         {
             name: 'Active',
+            selector: 'active',
+            sortable: true,
+        },
+        {
+            name: 'Active',
             cell: row => <div>
                 <label className='switch'>
-                    <input onChange={this.handleCheckClick} type='checkbox' />
+                    <input onClick={this.handleCheckClick(row._id)} type='checkbox' />
                     <span className='slider'></span>
                 </label>
             </div>
@@ -90,10 +94,27 @@ class Organization extends Component {
         this.setState({ toggledClearRows: !this.state.toggledClearRows });
     }
 
-    handleCheckClick = () => {
+    handleCheckClick = (id) => {
         let active = !this.state.isActive;
         console.log(active);
-        this.setState({ isActive: active });
+
+        // axios('/.netlify/functions/active', {
+        //     method: 'post',
+        //     header: {
+        //         'Accept': "application/json",
+        //     },
+        //     data: {
+        //         "_id": id,
+        //         "active": active
+        //     }
+        // })
+        //     .then((data) => {
+        //         console.log(data);
+        //         this.setState({ isActive: data.data.active });
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
     }
 
     deleteRow = (id) => {

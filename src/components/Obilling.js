@@ -58,7 +58,7 @@ class OBilling extends Component {
             .then((data) => {
                 console.log(data);
                 this.setState({ org_status: data.data.data.status, subs_id: data.data.data.subscription_id });
-                if (data.data.data.status != '') {
+                if (data.data.data.status !== '') {
                     axios.get('https://api.stripe.com/v1/payment_intents', {
                         headers: {
                             'Accept': 'application/json',
@@ -124,7 +124,7 @@ class OBilling extends Component {
 
     render() {
         let action;
-        if (this.state.org_status == 'canceled' || this.state.org_status == '') {
+        if (this.state.org_status === 'canceled' || this.state.org_status === '') {
             action = <Link to={"/payment/" + this.state.id} className="btn btn-primary primary-btn">Update Subscription</Link>
         } else {
             action = <button onClick={this.cancelSubscription} className="btn btn-danger danger-btn">Cancel Subscription</button>

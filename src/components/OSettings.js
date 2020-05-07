@@ -16,17 +16,35 @@ class OSettings extends Component {
             confirm_password: "",
             message: false,
             message_text: '',
-            empty_field: false
+            empty_field: false,
+            please_wait: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
-        const email = this.props.email;
-        const name = this.props.name;
+        // const email = this.props.email;
+        // const name = this.props.name;
         const id = this.props.id;
 
-        this.setState({ id: id, email: email, name: name });
+        this.setState({ id: id, please_wait: true });
+
+        axios('/.netlify/functions/getOrganization', {
+            method: 'post',
+            header: {
+                'Accept': "application/json",
+            },
+            data: {
+                "_id": id
+            }
+        })
+            .then((data) => {
+                console.log(data);
+                this.setState({ id: id, email: data.data.data.email, name: data.data.data.name, please_wait: false });
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     handleChange(event) {
@@ -35,7 +53,7 @@ class OSettings extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        if (this.state.email == "" || this.state.password == "") {
+        if (this.state.email === "" || this.state.old_password === "" || this.state.new_password === "") {
             this.setState({ empty_field: true });
             return;
         } else {
@@ -103,7 +121,7 @@ class OSettings extends Component {
                                         <div className="form-group text-center">
                                             <img src={avatar} alt="user-profile-pic" />
                                         </div>
-
+                                        {(this.state.please_wait) ? (<span className="info">Please wait...</span>) : (<span></span>)}
                                         <div className="form-group">
                                             <label>Name:</label>
                                             <input

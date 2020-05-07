@@ -3,7 +3,6 @@ import "../stylesheets/Sidebar.css";
 import screenshots from "../images/screensht-green.png";
 import employees from "../images/employee-green.png";
 import bar_chart from "../images/bar_chart.png";
-import SideNav from './ClientSidebar/SideNav';
 
 class Main extends Component {
     state = {}
@@ -22,7 +21,7 @@ class Main extends Component {
                     <div className="row mt-4">
                         <div className="col-6">
                             <div className="content-box">
-                                <img src={screenshots} />
+                                <img alt="screen" src={screenshots} />
                                 <p className="title">Screenshots</p>
                                 <p className="value">12500</p>
                             </div>
@@ -30,7 +29,7 @@ class Main extends Component {
                         <div className="col-6">
                             <div className="col1">
                                 <div className="content-box">
-                                    <img src={employees} />
+                                    <img alt="emp" src={employees} />
                                     <p className="title">All Employees</p>
                                     <p className="value">257</p>
                                 </div>
@@ -41,7 +40,7 @@ class Main extends Component {
                         <div className="col-12">
                             <div className="col1">
                                 <div className="graph-box">
-                                    <img src={bar_chart} />
+                                    <img alt="chart" src={bar_chart} />
                                 </div>
                             </div>
                         </div>

@@ -28,8 +28,8 @@ function AuthOrgApp() {
                         {params => <Obilling id={params.id} />}
                     </Route>
 
-                    <Route path="/organizational-settings/:email,:name,:id">
-                        {params => <OSettings email={params.email} name={params.name} id={params.id} />}
+                    <Route path="/organizational-settings/:id">
+                        {params => <OSettings id={params.id} />}
                     </Route>
 
                     <Route path="/screenshots" component={Screenshots} />

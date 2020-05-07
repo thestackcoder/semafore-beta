@@ -10,21 +10,42 @@ class Settings extends Component {
             isLoading: false,
             id: "",
             email: "",
+            name: "",
             new_password: "",
             old_password: "",
             confirm_password: "",
             message: false,
             message_text: '',
-            empty_field: false
+            empty_field: false,
+            please_wait: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
-        const email = this.props.email;
+        // const email = this.props.email;
         const id = this.props.id;
+        // const name = this.props.name;
 
-        this.setState({ id: id, email: email });
+        this.setState({ id: id, please_wait: true });
+
+        axios('/.netlify/functions/getAdminData', {
+            method: 'post',
+            header: {
+                'Accept': "application/json",
+            },
+            data: {
+                "_id": id
+            }
+        })
+            .then((data) => {
+                console.log(data);
+                this.setState({ id: id, email: data.data.email, name: data.data.name, please_wait: false });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
     }
 
     handleChange(event) {
@@ -33,7 +54,7 @@ class Settings extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        if (this.state.email == "" || this.state.password == "") {
+        if (this.state.email === "" || this.state.old_password === "" || this.state.new_password === "") {
             this.setState({ empty_field: true });
             return;
         } else {
@@ -49,14 +70,20 @@ class Settings extends Component {
                 data: {
                     "id": this.state.id,
                     "email": this.state.email,
+                    "name": this.state.name,
                     "password": this.state.new_password,
                     "old_password": this.state.old_password,
                 }
             })
                 .then((data) => {
-                    // setUserSession(response.data.token, response.data.user);
                     console.log(data);
-                    this.setState({ isLoading: false, message: true, message_text: data.data.msg });
+                    this.setState({
+                        isLoading: false,
+                        message: true,
+                        message_text: data.data.msg,
+                        name: data.data.name,
+                        email: data.data.email
+                    });
                 })
                 .catch(error => {
                     this.setState({ message: true, message_text: error.response.data.msg, isLoading: false });
@@ -100,7 +127,17 @@ class Settings extends Component {
                                         <div className="form-group text-center">
                                             <img src={avatar} alt="user-profile-pic" />
                                         </div>
-
+                                        {(this.state.please_wait) ? (<span className="info">Please wait...</span>) : (<span></span>)}
+                                        <div className="form-group">
+                                            <label>Name:</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="name"
+                                                value={this.state.name}
+                                                onChange={event => this.setState({ name: event.target.value })}
+                                            />
+                                        </div>
                                         <div className="form-group">
                                             <label>Email:</label>
                                             <input
@@ -113,7 +150,7 @@ class Settings extends Component {
                                         </div>
                                         <div className="form-group">
                                             <label>Current Password:</label>
-                                            <input type="text" className="form-control" id="pwd_1" onChange={event => this.setState({ old_password: event.target.value })} />
+                                            <input required type="text" className="form-control" id="pwd_1" onChange={event => this.setState({ old_password: event.target.value })} />
                                         </div>
                                         <div className="form-group">
                                             <label>New Password:</label>

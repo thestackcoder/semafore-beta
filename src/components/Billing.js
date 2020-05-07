@@ -44,22 +44,13 @@ class Billing extends Component {
             sortable: true,
         },
         {
-            name: 'Active',
-            cell: row => <div>
-                <label className='switch'>
-                    <input type='checkbox' />
-                    <span className='slider'></span>
-                </label>
-            </div>
-        },
-        {
             name: "Action",
             cell: row => {
-                if (row.status == 'canceled' || row.status == 'active') {
+                if (row.status === 'canceled' || row.status === 'active') {
                     return <div>
                         <Link to={"/payment/" + row._id} className="btn btn-success btn-sm" > Update Plan</Link>
                     </div >
-                } else if (row.status == '') {
+                } else if (row.status === '') {
                     return <span></span>
                 }
                 // else {

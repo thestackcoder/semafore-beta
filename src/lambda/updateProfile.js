@@ -18,30 +18,34 @@ exports.handler = async (event, context) => {
         const data = JSON.parse(event.body),
             id = data.id,
             email = data.email,
+            name = data.name,
             oldPwd = data.old_password,
             pwd = data.password;
 
         const user = await User.findById(id);
-
-        const matches = await bcrypt.compare(oldPwd, user.password);
         let response = {};
 
+        if (oldPwd) {
+            const matches = await bcrypt.compare(oldPwd, user.password);
 
-        if (!matches) {
-            errorStatusCode = 404
-            throw new Error(`Invalid current password`)
+            if (!matches) {
+                errorStatusCode = 404
+                throw new Error(`Invalid current password`)
+            }
         }
 
         const passwordHash = await bcrypt.hash(pwd, 10);
 
         const obj = {
             email: email,
+            name: name,
             password: passwordHash
         }
 
         response = {
             msg: user.email + " successfully updated",
-            email: email
+            email: email,
+            name: name
         }
         await User.findOneAndUpdate({ _id: id }, obj);
 

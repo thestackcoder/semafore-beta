@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Navlist from './Navlist';
 import Profile from '../Sidebar/Profile';
 import "../../stylesheets/Sidebar.css";
