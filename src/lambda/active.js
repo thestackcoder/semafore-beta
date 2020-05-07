@@ -20,14 +20,14 @@ exports.handler = async (event, context) => {
         // Parse the ID
         const data = JSON.parse(event.body),
             id = data.id,
-            active = data.active,
+            organization = data.organization,
             response = {
                 msg: "Organization successfully updated",
-                active: active
+                data: organization
             }
 
         // Use Organization.Model and id to update 
-        await Organization.findOneAndUpdate({ _id: id }, active)
+        await Organization.findOneAndUpdate({ _id: id }, organization)
 
         return {
             statusCode: 201,

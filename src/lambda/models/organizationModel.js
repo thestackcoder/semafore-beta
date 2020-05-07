@@ -20,8 +20,8 @@ const OrganzationSchema = new Schema({
         required: true,
     },
     active: {
-        type: Boolean,
-        default: false
+        type: String,
+        default: "false"
     },
     date: {
         type: Date,

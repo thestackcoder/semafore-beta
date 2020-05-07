@@ -9,16 +9,20 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 class Organization extends Component {
 
-    state = {
-        loading: true,
-        delLoad: false,
-        msg: null,
-        isActive: false,
-        orgs: [],
-        toggledClearRows: false,
-        rowsData: [],
-        subs_id: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: true,
+            delLoad: false,
+            msg: null,
+            isActive: "false",
+            orgs: [],
+            toggledClearRows: false,
+            rowsData: [],
+            subs_id: ''
+        }
     }
+
 
     columns = [
         {
@@ -43,17 +47,19 @@ class Organization extends Component {
         },
         {
             name: 'Active',
-            selector: 'active',
-            sortable: true,
-        },
-        {
-            name: 'Active',
-            cell: row => <div>
-                <label className='switch'>
-                    <input onClick={this.handleCheckClick(row._id)} type='checkbox' />
-                    <span className='slider'></span>
-                </label>
-            </div>
+            cell: row => {
+                return (<div>
+                    <label className='switch'>
+                        {(row.active === 'false') ? (
+                            <input type='checkbox' />
+                        ) : (
+                                <input type='checkbox' defaultChecked />
+                            )}
+                        <span onClick={() => { if (window.confirm('Are you sure you want to change active status?')) this.checkClick(row._id, row.active) }} className='slider'></span>
+                    </label>
+                </div>)
+
+            }
         },
         {
             name: "Action",
@@ -75,15 +81,11 @@ class Organization extends Component {
                 var res = data.data.data;
                 // let arr = res.map(obj => Object.values(obj));
                 this.setState({ loading: false, msg: data.data.msg, orgs: res });
-                // console.log(this.state.orgs);
+                console.log(this.state.orgs);
             })
             .catch(error => {
                 console.log(error);
             });
-    }
-
-    componentWillUnmount() {
-
     }
 
     handleChange = (state) => {
@@ -94,27 +96,37 @@ class Organization extends Component {
         this.setState({ toggledClearRows: !this.state.toggledClearRows });
     }
 
-    handleCheckClick = (id) => {
-        let active = !this.state.isActive;
-        console.log(active);
+    checkClick = (id, active) => {
+        let a;
+        if (active === 'false') {
+            a = 'true';
+        } else {
+            a = 'false'
+        }
 
-        // axios('/.netlify/functions/active', {
-        //     method: 'post',
-        //     header: {
-        //         'Accept': "application/json",
-        //     },
-        //     data: {
-        //         "_id": id,
-        //         "active": active
-        //     }
-        // })
-        //     .then((data) => {
-        //         console.log(data);
-        //         this.setState({ isActive: data.data.active });
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
+        console.log(id)
+        console.log(active)
+        console.log(a);
+
+        axios('/.netlify/functions/active', {
+            method: 'post',
+            header: {
+                'Accept': "application/json",
+            },
+            data: {
+                "id": id,
+                "organization": {
+                    "active": a
+                }
+            }
+        })
+            .then((data) => {
+                console.log(data);
+                this.setState({ isActive: data.data.active });
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     deleteRow = (id) => {
