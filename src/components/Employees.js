@@ -7,6 +7,7 @@ class Employees extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
             loading: true,
             delLoad: false,
             isActive: false,
@@ -60,6 +61,8 @@ class Employees extends Component {
     ]
 
     componentDidMount() {
+        const id = this.props.id;
+        this.setState({ id: id });
         axios({
             method: 'post',
             url: 'http://95.216.2.224:3000/getOrgEmployees',
@@ -67,7 +70,7 @@ class Employees extends Component {
                 'Accept': "application/json",
             },
             data: {
-                "organisation_id": "5eb40aa21861ed7c046fffc5"
+                "organisation_id": id
             }
         })
             .then((data) => {
@@ -115,7 +118,6 @@ class Employees extends Component {
 
 
     render() {
-        const id = "5eb40aa21861ed7c046fffc5";
         return (
             <div id="page-content-wrapper">
                 <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
@@ -128,7 +130,7 @@ class Employees extends Component {
                     <div className="row mt-2">
                         <div className="col-12">
                             <div className="mb-3">
-                                <Link to={'/add-employee/' + id} className="btn btn-primary primary-btn-x">Add New</Link   >
+                                <Link to={'/add-employee/' + this.state.id} className="btn btn-primary primary-btn-x">Add New</Link   >
                                 <a className="btn btn-primary primary-btn float-right">Import CSV</a>
                             </div>
                             <div className="firm-box">

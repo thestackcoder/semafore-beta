@@ -24,7 +24,10 @@ function AuthOrgApp() {
                         <Omain></Omain>
                     </Route>
                     <Route path="/organizational-dashboard" component={Omain} />
-                    <Route path="/employees" component={Employees} />
+
+                    <Route path="/employees/:id">
+                        {params => <Employees id={params.id} />}
+                    </Route>
 
                     <Route path="/organizational-billing/:id">
                         {params => <Obilling id={params.id} />}
