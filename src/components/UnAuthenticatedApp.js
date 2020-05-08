@@ -15,9 +15,9 @@ function UnAuthenticatedApp() {
                 <Route path="/">
                     <Redirect to="login" />
                 </Route>
-                <Route path="/organizational-billing/:id">
+                {/* <Route path="/organizational-billing/:id">
                     <Login />
-                </Route>
+                </Route> */}
                 <Route path="/organization">
                     <Redirect to="login" />
                 </Route>
@@ -27,12 +27,12 @@ function UnAuthenticatedApp() {
                 {/* <Route path="/update-organization/:params">
                     <Redirect to="login" />
                 </Route> */}
-                <Route path="/settings/:id">
-                    <Login />
-                </Route>
-                <Route path="/update-organization/:id,:name,:email">
-                    <Login />
-                </Route>
+                {/* <Route path="/settings/:id">
+                    <Redirect to="login" />
+                </Route> */}
+                {/* <Route path="/update-organization/:id,:name,:email">
+                    <Redirect to="login" />
+                </Route> */}
                 <Route path="/billing">
                     <Redirect to="login" />
                 </Route>
@@ -45,9 +45,9 @@ function UnAuthenticatedApp() {
                 <Route path="/organizational-billing">
                     <Redirect to="login" />
                 </Route>
-                <Route path="/organizational-settings/:id">
-                    <Login />
-                </Route>
+                {/* <Route path="/organizational-settings/:id">
+                    <Redirect to="login" />
+                </Route> */}
                 <Route path="/screenshots">
                     <Redirect to="login" />
                 </Route>
@@ -58,8 +58,8 @@ function UnAuthenticatedApp() {
                 <Route path="/:rest*">
                     <div className="not-found">
                         <img alt="logo" src={logo} />
-                        <span>404, page not found!</span>
-                        <Link to="/login">Go to Login Page</Link>
+                        <span>You are not logged in.</span>
+                        <Link to="/login">Click to Login</Link>
                     </div>
                 </Route>
 

@@ -6,6 +6,8 @@ import SideNav from './ClientSidebar/SideNav';
 import OSettings from './OSettings';
 import Screenshots from './Screenshots';
 import StripeApp from './StripeApp';
+import AddEmployee from '../containers/AddEmployee';
+import UpdateEmployee from '../containers/UpdateEmployee';
 import logo from "../images/logo.png";
 import { Route, Switch, Redirect, Link } from "wouter";
 
@@ -40,6 +42,14 @@ function AuthOrgApp() {
 
                     <Route path="/payment/:id">
                         {params => <StripeApp id={params.id} />}
+                    </Route>
+
+                    <Route path="/add-employee/:id">
+                        {params => <AddEmployee id={params.id} />}
+                    </Route>
+
+                    <Route path="/update-employee/:phone,:name">
+                        {params => <UpdateEmployee phone={params.phone} name={params.name} />}
                     </Route>
 
                     <Route path="/:rest*">

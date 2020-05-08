@@ -163,11 +163,11 @@ class Settings extends Component {
                                         </div>
                                         <div className="form-group">
                                             <label>Current Password:</label>
-                                            <input required type="text" className="form-control" id="pwd_1" onChange={event => this.setState({ old_password: event.target.value })} />
+                                            <input required type="password" className="form-control" id="pwd_1" onChange={event => this.setState({ old_password: event.target.value })} />
                                         </div>
                                         <div className="form-group">
                                             <label>New Password:</label>
-                                            <input type="text" className="form-control" id="pwd_2" onChange={event => this.setState({ new_password: event.target.value })} />
+                                            <input type="password" className="form-control" id="pwd_2" onChange={event => this.setState({ new_password: event.target.value })} />
                                         </div>
                                         {/* <div className="form-group">
                                                 <label>Confirm New Password:</label>
