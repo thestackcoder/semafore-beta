@@ -121,8 +121,23 @@ class Organization extends Component {
             }
         })
             .then((data) => {
-                console.log(data);
                 this.setState({ isActive: data.data.active });
+                axios('http://95.216.2.224:3000/updateOrgEmployeesStatus', {
+                    method: 'post',
+                    header: {
+                        'Accept': "application/json",
+                    },
+                    data: {
+                        "organisation_id": id,
+                        "status": a
+                    }
+                })
+                    .then((data) => {
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             })
             .catch(error => {
                 console.log(error);
