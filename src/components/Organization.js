@@ -45,6 +45,11 @@ class Organization extends Component {
             selector: 'date',
             sortable: true,
         },
+        // {
+        //     name: 'Active',
+        //     selector: 'active',
+        //     sortable: true,
+        // },
         {
             name: 'Active',
             cell: row => {

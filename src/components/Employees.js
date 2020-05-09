@@ -40,14 +40,26 @@ class Employees extends Component {
             selector: 'joined_date',
             sortable: true,
         },
+        // {
+        //     name: 'Status',
+        //     selector: 'status',
+        //     sortable: true,
+        // },
         {
             name: 'Active',
-            cell: row => <div>
-                <label className='switch'>
-                    <input type='checkbox' />
-                    <span className='slider'></span>
-                </label>
-            </div>
+            cell: row => {
+                return (<div>
+                    <label className='switch'>
+                        {(row.status === 'false') ? (
+                            <input type='checkbox' />
+                        ) : (
+                                <input type='checkbox' defaultChecked />
+                            )}
+                        <span onClick={() => { if (window.confirm('Are you sure you want to change status of employee?')) this.checkClick(row.phoneNo, row.status) }} className='slider'></span>
+                    </label>
+                </div>)
+
+            }
         },
         {
             name: "Action",
@@ -90,6 +102,36 @@ class Employees extends Component {
         let active = !this.state.isActive;
         console.log(active);
         this.setState({ isActive: active });
+    }
+
+    checkClick = (phone, active) => {
+        let a;
+        if (active === 'false') {
+            a = 'true';
+        } else {
+            a = 'false'
+        }
+
+        console.log(phone);
+        console.log(active);
+        console.log(a);
+
+        axios('http://95.216.2.224:3000/updateEmployeeStatus', {
+            method: 'post',
+            header: {
+                'Accept': "application/json",
+            },
+            data: {
+                "phoneNo": phone,
+                "status": a
+            }
+        })
+            .then((data) => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     deleteRow = (phone) => {
