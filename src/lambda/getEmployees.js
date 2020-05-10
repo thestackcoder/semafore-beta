@@ -27,13 +27,6 @@ export function handler(event, context, callback) {
           statusCode: 200,
           body: JSON.stringify({ msg: "Employees returned successfully.!", employees: emps }),
         });
-        // return {
-        //   statusCode: 200,
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({ msg: "Employees returned successfully.!", employees: emps }),
-        // }
       })
       .catch(error => {
         console.log(error);
@@ -41,7 +34,7 @@ export function handler(event, context, callback) {
 
   } catch (err) {
     return {
-      statusCode: errorStatusCode,
+      statusCode: 500,
       body: JSON.stringify({ msg: err.message }),
     }
   } finally {

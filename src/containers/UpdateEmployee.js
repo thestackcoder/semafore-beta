@@ -41,7 +41,7 @@ class UpdateEmployee extends Component {
         this.setState({ isLoading: true }, () => {
             axios({
                 method: 'post',
-                url: 'http://95.216.2.224:3000/updateEmployeeName',
+                url: '/.netlify/functions/updateEmployeeName',
                 headers: {
                     'Accept': "application/json",
                 },
@@ -52,7 +52,7 @@ class UpdateEmployee extends Component {
             })
                 .then((data) => {
                     console.log(data);
-                    this.setState({ isLoading: false, message: true, message_text: data.data.message });
+                    this.setState({ isLoading: false, message: true, message_text: data.data.msg });
                 })
                 .catch(error => {
                     console.log(error);

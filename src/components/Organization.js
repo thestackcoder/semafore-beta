@@ -127,7 +127,7 @@ class Organization extends Component {
         })
             .then((data) => {
                 this.setState({ isActive: data.data.active });
-                axios('http://95.216.2.224:3000/updateOrgEmployeesStatus', {
+                axios('/.netlify/functions/updateOrgEmployeeStatus', {
                     method: 'post',
                     header: {
                         'Accept': "application/json",

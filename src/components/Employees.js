@@ -77,7 +77,7 @@ class Employees extends Component {
         this.setState({ id: id });
         axios({
             method: 'post',
-            url: '/.netlify/functions/hello',
+            url: '/.netlify/functions/getEmployees',
             headers: {
                 'Accept': "application/json",
             },
@@ -116,7 +116,7 @@ class Employees extends Component {
         console.log(active);
         console.log(a);
 
-        axios('http://95.216.2.224:3000/updateEmployeeStatus', {
+        axios('/.netlify/functions/updateEmployeeStatus', {
             method: 'post',
             header: {
                 'Accept': "application/json",
@@ -139,7 +139,7 @@ class Employees extends Component {
         console.log(phone);
         let current_emps = [...this.state.emps];
 
-        axios('http://95.216.2.224:3000/deleteEmployee', {
+        axios('/.netlify/functions/deleteEmployee', {
             method: 'post',
             header: {
                 'Accept': "application/json",

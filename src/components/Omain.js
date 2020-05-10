@@ -14,7 +14,7 @@ const Main = () => {
     useEffect(() => {
         axios({
             method: 'post',
-            url: 'http://95.216.2.224:3000/getOrgEmployees',
+            url: '/.netlify/functions/getEmployees',
             hedaer: {
                 'Accept': "application/json",
             },
@@ -23,6 +23,7 @@ const Main = () => {
             }
         })
             .then((response) => {
+                console.log(response);
                 setEmps(response.data.employees);
                 setEmpsLength(response.data.employees.length);
             })
