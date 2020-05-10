@@ -77,17 +77,17 @@ class Employees extends Component {
         this.setState({ id: id });
         axios({
             method: 'post',
-            url: 'http://95.216.2.224:3000/getOrgEmployees',
+            url: '/.netlify/functions/hello',
             headers: {
                 'Accept': "application/json",
             },
             data: {
-                "organisation_id": id
+                'organisation_id': id
             }
         })
             .then((data) => {
                 console.log(data.data);
-                this.setState({ loading: false, msg: data.data.message, emps: data.data.employees });
+                this.setState({ loading: false, msg: data.data.msg, emps: data.data.employees });
             })
             .catch(error => {
                 console.log(error);
