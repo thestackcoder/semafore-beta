@@ -47,6 +47,7 @@ class AddOrg extends Component {
                 .then((data) => {
                     // setUserSession(response.data.token, response.data.user);
                     console.log(data);
+                    this.setState({ name: '', email: '', password: '' });
                     this.setState({ isLoading: false, message: true, message_text: data.data.msg });
                 })
                 .catch(error => {

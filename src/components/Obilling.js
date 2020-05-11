@@ -105,12 +105,32 @@ class OBilling extends Component {
                     data: {
                         "id": this.state.id,
                         "organization": {
+                            "active": "false",
                             "status": this.state.org_status,
                         }
                     }
                 })
                     .then((data) => {
                         console.log(data);
+                        let org_status = 'false';
+
+                        console.log(org_status);
+                        axios('/.netlify/functions/updateOrgEmployeeStatus', {
+                            method: 'post',
+                            header: {
+                                'Accept': "application/json",
+                            },
+                            data: {
+                                "organisation_id": this.state.id,
+                                "status": org_status
+                            }
+                        })
+                            .then((data) => {
+                                console.log(data);
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            });
                     })
                     .catch(error => {
                         console.log(error);
@@ -130,7 +150,6 @@ class OBilling extends Component {
             action = <button onClick={this.cancelSubscription} className="btn btn-danger danger-btn">Cancel Subscription</button>
         }
         return (
-
             <div id="page-content-wrapper">
                 <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
                     {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -143,6 +162,7 @@ class OBilling extends Component {
                         <div className="col-12">
                             <div className="firm-box">
                                 <h5 className="heading">Billing Details</h5>
+
                                 {action}
                                 {
                                     this.state.loading ? (

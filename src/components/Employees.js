@@ -10,7 +10,6 @@ class Employees extends Component {
             id: '',
             loading: true,
             delLoad: false,
-            isActive: false,
             msg: null,
             isActive: "false",
             emps: [],
@@ -77,6 +76,24 @@ class Employees extends Component {
         this.setState({ id: id });
         axios({
             method: 'post',
+            url: '/.netlify/functions/getOrganization',
+            headers: {
+                'Accept': "application/json",
+            },
+            data: {
+                '_id': id
+            }
+        })
+            .then((data) => {
+                console.log(data.data.data.active);
+                this.setState({ isActive: data.data.data.active });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+        axios({
+            method: 'post',
             url: '/.netlify/functions/getEmployees',
             headers: {
                 'Accept': "application/json",
@@ -98,11 +115,11 @@ class Employees extends Component {
         this.setState({ toggledClearRows: !this.state.toggledClearRows });
     }
 
-    handleCheckClick = () => {
-        let active = !this.state.isActive;
-        console.log(active);
-        this.setState({ isActive: active });
-    }
+    // handleCheckClick = () => {
+    //     let active = !this.state.isActive;
+    //     console.log(active);
+    //     this.setState({ isActive: active });
+    // }
 
     checkClick = (phone, active) => {
         let a;
@@ -171,10 +188,17 @@ class Employees extends Component {
                 <div className="container">
                     <div className="row mt-2">
                         <div className="col-12">
-                            <div className="mb-3">
-                                <Link to={'/add-employee/' + this.state.id} className="btn btn-primary primary-btn-x">Add New</Link   >
-                                <a className="btn btn-primary primary-btn float-right">Import CSV</a>
-                            </div>
+                            {(this.state.isActive === 'true') ? (
+                                <div className="mb-3">
+                                    <Link to={'/add-employee/' + this.state.id} className="btn btn-primary primary-btn-x">Add New</Link   >
+                                    <a className="btn btn-primary primary-btn float-right">Import CSV</a>
+                                </div>
+                            ) : (
+                                    <div className="mb-3">
+                                        <span className="info">Subscribe to add employees.</span>
+                                    </div>
+                                )}
+
                             <div className="firm-box">
                                 <h5>All Employees</h5>
                                 {(this.state.delLoad) ? (<span className="info">Please wait...</span>) : (<span></span>)}

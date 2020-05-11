@@ -26,6 +26,7 @@ class Settings extends Component {
     componentDidMount() {
         // const email = this.props.email;
         const id = this.props.id;
+        console.log(id);
         // const name = this.props.name;
 
         this.setState({ id: id, please_wait: true });

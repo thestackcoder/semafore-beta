@@ -89,10 +89,12 @@ class StripeApp extends Component {
                     .then(response => response.json())
                     .then(result => {
                         console.log('Success:', result);
+                        let org_state = 'false';
                         if (result.status === 'active') {
                             this.setState({
                                 message: 'User suscribed for  ' + result.items.data[0].plan.nickname,
                             });
+                            org_state = 'true';
                         }
                         axios({
                             method: 'put',
@@ -103,6 +105,7 @@ class StripeApp extends Component {
                             data: {
                                 "id": this.state.id,
                                 "organization": {
+                                    "active": org_state,
                                     "status": result.status,
                                     "payment_method": result.items.data[0].plan.nickname,
                                     "customer_id": result.customer,
@@ -113,9 +116,35 @@ class StripeApp extends Component {
                             .then((data) => {
                                 // setUserSession(response.data.token, response.data.user);
                                 console.log(data);
-                                this.setState({
-                                    formProcess: false
-                                });
+                                let org_status = 'false';
+                                if (data.data.data.status === 'active') {
+                                    org_status = 'true';
+                                }
+                                console.log(org_status);
+                                axios('/.netlify/functions/updateOrgEmployeeStatus', {
+                                    method: 'post',
+                                    header: {
+                                        'Accept': "application/json",
+                                    },
+                                    data: {
+                                        "organisation_id": this.state.id,
+                                        "status": org_status
+                                    }
+                                })
+                                    .then((data) => {
+                                        console.log(data);
+                                        this.setState({
+                                            formProcess: false,
+                                            cardNumber: '',
+                                            expMonth: '',
+                                            expYear: '',
+                                            cvc: ''
+                                        });
+                                    })
+                                    .catch(error => {
+                                        console.log(error);
+                                    });
+
                             })
                             .catch(error => {
                                 console.log(error);

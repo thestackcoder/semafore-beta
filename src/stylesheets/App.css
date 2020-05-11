@@ -90,6 +90,10 @@ body {
   transition: 0.5s;
 }
 
+.graph-box img{
+  width: 70%;
+}
+
 
 .content-box .title{
   font-size: 26px;
@@ -480,4 +484,10 @@ footer{
 
 .info{
   color: #01A499;
+}
+
+.react-tel-input input{
+  border-radius: 0px !important;
+  height: 40px !important;
+  width: 100% !important;
 }

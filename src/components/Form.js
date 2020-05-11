@@ -6,6 +6,7 @@ import { FormGroup } from "react-bootstrap";
 function Form(props) {
     const [input, setInput] = useState({});
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState();
 
     const onSubmit = async e => {
         e.preventDefault();
@@ -15,6 +16,7 @@ function Form(props) {
             await props.onSubmit(input);
         } finally {
             setLoading(false);
+            setError('Email or password is incorrect');
         }
     };
 
@@ -22,6 +24,11 @@ function Form(props) {
         <>
             <form onSubmit={onSubmit}>
                 <fieldset disabled={loading} aria-busy={loading}>
+                    {(error) ? (
+                        <span className="text-danger">{error}</span>
+                    ) : (
+                            <span></span>
+                        )}
                     <FormGroup controlId="email">
                         {props.inputs.map(i => (
                             <input
