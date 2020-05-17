@@ -87,7 +87,11 @@ class Employees extends Component {
         })
             .then((data) => {
                 console.log(data.data.data.active);
-                this.setState({ isActive: data.data.data.active, empNumber: parseInt(data.data.data.number_of_employees, 10) });
+                if (data.data.data.number_of_employees !== '') {
+                    this.setState({ isActive: data.data.data.active, empNumber: parseInt(data.data.data.number_of_employees, 10) });
+                } else {
+                    this.setState({ isActive: data.data.data.active, empNumber: '' });
+                }
             })
             .catch(error => {
                 console.log(error);
@@ -190,7 +194,7 @@ class Employees extends Component {
                     <div className="row mt-2">
                         <div className="col-12">
                             {(this.state.isActive === 'true') ? (
-                                (this.state.emps.length < this.state.empNumber) ? (
+                                (this.state.emps.length < this.state.empNumber || this.state.empNumber === '') ? (
                                     <div className="mb-3">
                                         <Link to={'/add-employee/' + this.state.id} className="btn btn-primary primary-btn-x">Add New</Link   >
                                         <a className="btn btn-primary primary-btn float-right">Import CSV</a>

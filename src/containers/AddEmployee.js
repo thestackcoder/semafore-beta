@@ -60,7 +60,7 @@ class AddEmployee extends Component {
                 },
                 data: {
                     "name": this.state.name,
-                    "phoneNo": this.state.phone,
+                    "phoneNo": '+' + this.state.phone,
                     "organisation_id": this.state.id,
                 }
             })
@@ -128,6 +128,7 @@ class AddEmployee extends Component {
                                                 <div className="form-group">
                                                     <label>Phone:</label>
                                                     <PhoneInput
+                                                        enableAreaCodes={true}
                                                         country={'us'}
                                                         value={this.state.phone}
                                                         onChange={phone => this.setState({ phone })}

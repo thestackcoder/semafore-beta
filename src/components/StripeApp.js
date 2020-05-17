@@ -72,10 +72,7 @@ class StripeApp extends Component {
                 amount: number
             });
         }
-
-
     }
-
 
     createCustomerAndSubscription = (id) => {
         // e.preventDefault();
