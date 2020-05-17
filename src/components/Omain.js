@@ -4,12 +4,14 @@ import screenshots from "../images/screensht-green.png";
 import employees from "../images/employee-green.png";
 import bar_chart from "../images/bar_chart.png";
 import axios from 'axios';
+import chat from "../images/chat.png";
 import { useAuth } from "../providers/auth-provider";
 
 const Main = () => {
     const { logout, user } = useAuth();
     const [emp, setEmps] = useState();
     const [emplength, setEmpsLength] = useState();
+    const [msgCount, setMsgCount] = useState();
 
     useEffect(() => {
         axios({
@@ -30,6 +32,24 @@ const Main = () => {
             .catch(error => {
                 console.log(error);
             });
+
+        axios({
+            method: 'post',
+            url: '/.netlify/functions/getOrgsMsgsCount',
+            hedaer: {
+                'Accept': "application/json",
+            },
+            data: {
+                'organisation_id': user.id
+            }
+        })
+            .then((response) => {
+                // console.log(response);
+                setMsgCount(response.data.count);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }, [])
 
     return (
@@ -45,9 +65,9 @@ const Main = () => {
                 <div className="row mt-4">
                     <div className="col-6">
                         <div className="content-box">
-                            <img alt="screen" src={screenshots} />
-                            <p className="title">Screenshots</p>
-                            <p className="value">12500</p>
+                            <img alt="screen" src={chat} />
+                            <p className="title">Messages</p>
+                            <p className="value">{msgCount}</p>
                         </div>
                     </div>
                     <div className="col-6">

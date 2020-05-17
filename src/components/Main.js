@@ -8,12 +8,22 @@ import axios from 'axios';
 const Main = () => {
     const [org, setOrgs] = useState();
     const [orglength, setOrgsLength] = useState();
+    const [orgMsgsCount, setOrgsMsgsCount] = useState();
+
 
     useEffect(() => {
         axios.get('/.netlify/functions/readOrganization')
             .then((response) => {
                 setOrgs(response.data.data);
                 setOrgsLength(response.data.data.length);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+        axios.get('/.netlify/functions/getAllOrgsMsgsCount')
+            .then((response) => {
+                setOrgsMsgsCount(response.data.count);
             })
             .catch(error => {
                 console.log(error);
@@ -35,7 +45,7 @@ const Main = () => {
                         <div className="content-box">
                             <img src={chat} alt="Chat" />
                             <p className="title">Messages</p>
-                            <p className="value">12500</p>
+                            <p className="value">{orgMsgsCount}</p>
                         </div>
                     </div>
                     <div className="col-6">
