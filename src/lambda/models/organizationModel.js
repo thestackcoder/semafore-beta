@@ -46,6 +46,10 @@ const OrganzationSchema = new Schema({
     status: {
         type: String,
         default: ''
+    },
+    number_of_employees: {
+        type: String,
+        default: ''
     }
 });
 

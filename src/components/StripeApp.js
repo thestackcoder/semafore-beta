@@ -13,7 +13,9 @@ class StripeApp extends Component {
             expMonth: '',
             cardNumber: '',
             formProcess: false,
-            subscriptionPlan: ''
+            subscriptionPlan: '',
+            amount: 0,
+            empNumber: ''
         }
     }
 
@@ -32,8 +34,46 @@ class StripeApp extends Component {
 
     handleChange = (evt) => {
         this.setState({
-            [evt.target.name]: evt.target.value
+            [evt.target.name]: evt.target.value,
         });
+
+    }
+
+    handleSelectChange = (evt) => {
+        let am = 0;
+        if (evt.target.value === 'plan_HCLnmkUphAjOtD') {
+            am = 10;
+        } else if (evt.target.value === 'plan_HCLnsiWIp66uz6') {
+            am = 5;
+        } else if (evt.target.value === 'plan_HCLmkhrjwUcgfV') {
+            am = 50;
+        } else if (evt.target.value === 'plan_HBDEzsHuEhN6NI') {
+            am = 12;
+        } else {
+            am = 0;
+        }
+        this.setState({
+            [evt.target.name]: evt.target.value,
+            amount: am
+        });
+
+    }
+
+    handleNumberChange = (evt) => {
+        let number = this.state.amount;
+        if (evt.target.val !== '') {
+            let res = evt.target.value * number;
+            this.setState({
+                [evt.target.name]: evt.target.value,
+                amount: res
+            });
+        } else {
+            this.setState({
+                amount: number
+            });
+        }
+
+
     }
 
 
@@ -91,9 +131,9 @@ class StripeApp extends Component {
                         console.log('Success:', result);
                         let org_state = 'false';
                         if (result.status === 'active') {
-                            this.setState({
-                                message: 'User suscribed for  ' + result.items.data[0].plan.nickname,
-                            });
+                            // this.setState({
+                            //     message: 'User suscribed for  ' + result.items.data[0].plan.nickname,
+                            // });
                             org_state = 'true';
                         }
                         axios({
@@ -109,7 +149,8 @@ class StripeApp extends Component {
                                     "status": result.status,
                                     "payment_method": result.items.data[0].plan.nickname,
                                     "customer_id": result.customer,
-                                    "subscription_id": result.id
+                                    "subscription_id": result.id,
+                                    "number_of_employees": this.state.empNumber
                                 }
                             }
                         })
@@ -138,7 +179,8 @@ class StripeApp extends Component {
                                             cardNumber: '',
                                             expMonth: '',
                                             expYear: '',
-                                            cvc: ''
+                                            cvc: '',
+                                            message: 'User suscribed successfully',
                                         });
                                     })
                                     .catch(error => {
@@ -212,7 +254,31 @@ class StripeApp extends Component {
         }
     }
 
+
+
     render() {
+        let empNumber;
+        if (this.state.subscriptionPlan === 'plan_HCLnmkUphAjOtD' || this.state.subscriptionPlan === 'plan_HCLnsiWIp66uz6') {
+            empNumber = <div className="col-xs-6 col-md-6">
+                <div className="form-group">
+                    <label>Number of employees</label>
+                    <div className="input-group">
+                        <input required type="number" className="form-control" placeholder="No# of employees" name="empNumber" min="0" max="9999" onChange={this.handleNumberChange} />
+                        <span className="input-group-addon"><span className="fa fa-credit-card"></span></span>
+                    </div>
+                </div>
+            </div>;
+        } else {
+            empNumber = <div className="col-xs-6 col-md-6">
+                <div className="form-group">
+                    <label>Number of employees</label>
+                    <div className="input-group">
+                        <input type="number" className="form-control" placeholder="No# of employees" min="0" max="9999" disabled />
+                        <span className="input-group-addon"><span className="fa fa-credit-card"></span></span>
+                    </div>
+                </div>
+            </div>;
+        }
 
         return (
             <div id="page-content-wrapper">
@@ -242,7 +308,7 @@ class StripeApp extends Component {
                                                                 )
                                                         }
                                                         <div className="row">
-                                                            <div className="col-xs-6 col-md-6">
+                                                            <div className="col-xs-12 col-md-12">
                                                                 <div className="form-group">
                                                                     <label>Card Number</label>
                                                                     <div className="input-group">
@@ -255,7 +321,7 @@ class StripeApp extends Component {
                                                                 <div className="form-group">
                                                                     <label>Subscription Plan</label>
                                                                     <div className="input-group">
-                                                                        <select required name="subscriptionPlan" className="form-control" onChange={this.handleChange}>
+                                                                        <select required name="subscriptionPlan" className="form-control" onChange={this.handleSelectChange}>
                                                                             <option value="">Select Plan</option>
                                                                             <option value="plan_HCLnmkUphAjOtD">Annual Billing (per employee)</option>
                                                                             <option value="plan_HCLnsiWIp66uz6">Monthly Billing (per employee)</option>
@@ -265,6 +331,7 @@ class StripeApp extends Component {
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            {empNumber}
                                                         </div>
                                                         <div className="row">
                                                             <div className="col-xs-7 col-md-7">
@@ -313,6 +380,10 @@ class StripeApp extends Component {
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <h1 className="amount">$
+                                                        <span>{this.state.amount}</span>
+                                                    </h1>
+                                                    <br></br>
                                                     <div className="panel-footer">
                                                         <div className="row">
                                                             <div className="col-xs-12 col-md-12">

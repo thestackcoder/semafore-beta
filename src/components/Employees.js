@@ -15,6 +15,7 @@ class Employees extends Component {
             emps: [],
             toggledClearRows: false,
             rowsData: [],
+            empNumber: 0
         }
     }
 
@@ -86,7 +87,7 @@ class Employees extends Component {
         })
             .then((data) => {
                 console.log(data.data.data.active);
-                this.setState({ isActive: data.data.data.active });
+                this.setState({ isActive: data.data.data.active, empNumber: parseInt(data.data.data.number_of_employees, 10) });
             })
             .catch(error => {
                 console.log(error);
@@ -189,10 +190,20 @@ class Employees extends Component {
                     <div className="row mt-2">
                         <div className="col-12">
                             {(this.state.isActive === 'true') ? (
-                                <div className="mb-3">
-                                    <Link to={'/add-employee/' + this.state.id} className="btn btn-primary primary-btn-x">Add New</Link   >
-                                    <a className="btn btn-primary primary-btn float-right">Import CSV</a>
-                                </div>
+                                (this.state.emps.length < this.state.empNumber) ? (
+                                    <div className="mb-3">
+                                        <Link to={'/add-employee/' + this.state.id} className="btn btn-primary primary-btn-x">Add New</Link   >
+                                        <a className="btn btn-primary primary-btn float-right">Import CSV</a>
+                                    </div>
+                                ) : (
+                                        <div className="mb-3 alert alert-danger alert-dismissible fade show" role="alert">
+                                            <span>You cannot add more employees according to your plan. Please update your subscription.</span>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    )
+
                             ) : (
                                     <div className="mb-3">
                                         <span className="info">Subscribe to add employees.</span>

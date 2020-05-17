@@ -491,3 +491,7 @@ footer{
   height: 40px !important;
   width: 100% !important;
 }
+
+.amount{
+  text-align: center;
+}

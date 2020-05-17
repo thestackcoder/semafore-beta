@@ -16,7 +16,8 @@ class AddEmployee extends Component {
             message: false,
             response_text: '',
             empty_field: false,
-            active: ''
+            active: '',
+            empsLength: 0
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
